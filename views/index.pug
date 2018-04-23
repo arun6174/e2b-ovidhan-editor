@@ -1,0 +1,327 @@
+extends layout
+
+block content
+  div.container.main-box
+    div.jumbotron(style='text-align:center')
+      h2
+        font(color='white') Editor for English to Bangla Dictionary
+      h4
+        font(color='grey') v1.0
+
+    // Nav tabs in card
+    .card
+      ul.nav.nav-tabs(role='tablist')
+        li.active(role='presentation')
+          a(href='#addnew', aria-controls='home', role='tab', data-toggle='tab') Add New
+        li(role='presentation')
+          a(href='#search-edit', aria-controls='profile', role='tab', data-toggle='tab') Search & Edit
+      // Tab panes
+      .tab-content
+        #addnew.tab-pane.active(role='tabpanel')
+          form.form-horizontal#formAddNew(style='align:left')
+            div.container
+              .row
+                .form-group.col-md-3
+                  label(for='mainword') Main Word
+                  br
+                  input#mainword.form-control(type="text", name="mainword")
+                .form-group.col-md-1
+                  label
+                .form-group.col-md-3
+                  label(for='altspelling') Alternate Spelling(s)
+                  br
+                  input#altspelling.form-control(type="text", name="altspelling")
+
+            div#usage
+              hr
+              label Usage
+              br
+              br
+              div.container.divPos#usage1pos1
+                div.form-group.form-inline
+                  label(for='posSelect') 1.1 &nbsp; Parts of Speech
+                  select.selectpicker#posSelect.form-control(name='selectpos', data-style='btn-primary', title='Select one', data-width='auto')
+                    option(value='noun') Noun
+                    option(value='pron') Pronoun
+                    option(value='verb') Verb
+                    option(value='adj') Adjective
+                    option(value='adv') Adverb
+                    option(value='conj') Conjunction
+                    option(value='prep') Preposition
+                    option(value='intr') Interjection
+                div#posNoun.form-group.form-inline
+                  label(for='plural', style='padding-left:3em') Plural
+                  input#plural.form-control(type="text", name='plural')
+                  label(for='posNounTypeSelect', style='padding-left:4em') Types
+                  select.selectpicker#posNounTypeSelect.form-control(name='selectTypesForNoun', data-style='btn-info', title='Select one', data-width='fit', multiple='', data-max-options='2')
+                    option(value='cm-noun') Common noun
+                    option(value='pr-noun') Proper noun
+                    option(value='abs-noun') Abstract noun
+                    option(value='col-noun') Collective noun
+                    option(value='count-noun') Countable
+                    option(value='uncount-noun') Uncountable
+                  br
+                  br
+                  label(style='padding-left:3em') Different forms:
+                  .x
+                    div
+                      label(for='nounForm3rdPerson', style='padding-left:6em') 3rd person
+                    div
+                      input#nounForm3rdPerson.form-control(type="text", name='3rdPerson', style='margin-left:1em')
+                  .x
+                    div
+                      label(for='nounFormPresentCont', style='padding-left:6em') Present cont.
+                    div
+                      input#nounFormPresentCont.form-control(type="text", name='presentCont', style='margin-left:1em')
+                  .x
+                    div
+                      label(for='nounFormPast', style='padding-left:6em') Past
+                    div
+                      input#nounFormPast.form-control(type="text", name='Past', style='margin-left:1em')
+                  .x
+                    div
+                      label(for='nounFormPastPart', style='padding-left:6em') Past part.
+                    div
+                      input#nounFormPastPart.form-control(type="text", name='pastPart', style='margin-left:1em')
+                //div#divMeaning.divMeaning.form-inline
+                //  .x
+                //    div
+                //      label(style='margin-left:3em;') অর্থ (N)
+                //    div
+                //      input#meaning.form-control(type='text', name='meaning', style='width: 40em; margin-left:2em')
+                //  .x
+                //    div
+                //      label(style='margin-left:4em') উদাহরণ
+                //    div
+                //      input#example.form-control(type='text', name='example', style='width:40em; margin-left:2em')
+                //      button#btnAddSubMeaning.btn.btn-default.addButton(type='button', style='margin-left:2em; padding:4px 8px 4px 8px', onclick='addSubMeaning(this.id)')
+                //        i.fa.fa-plus
+                //        | &nbsp; অর্থান্তর
+
+
+                button#btnAddMoreMeaning.btn.btn-default.addButton(type='button', style='margin-left:2em; margin-top:1em', onclick='addMoreMeaning(this.id)')
+                  i.fa.fa-plus
+                  | &nbsp; অর্থ
+
+        #search-edit.tab-pane(role='tabpanel')
+          h4 Work in progress...
+
+  // Template for Usage
+  div#divUsage.hide.divClsUsage
+    hr
+    label Usage
+    br
+    br
+    div#divPos.container.divClsPos
+      div.form-group.form-inline
+        label(for='posSelect') 1.1 &nbsp; Parts of Speech
+        select.selectpicker#selectPos.form-control(name='selectPos', data-style='btn-primary', title='Select one', data-width='auto')
+          option(value='noun') Noun
+          option(value='pron') Pronoun
+          option(value='verb') Verb
+          option(value='adj') Adjective
+          option(value='adv') Adverb
+          option(value='conj') Conjunction
+          option(value='prep') Preposition
+          option(value='intr') Interjection
+      div#divNoun.form-group.form-inline
+        label(for='plural', style='padding-left:3em') Plural
+        input#inpPlural.form-control(type="text", name='plural')
+        label(for='posNounTypeSelect', style='padding-left:4em') Types
+        select.selectpicker#selectNounType.form-control(name='selectNounType', data-style='btn-info', title='Select one', data-width='fit', multiple='', data-max-options='2')
+          option(value='cm-noun') Common noun
+          option(value='pr-noun') Proper noun
+          option(value='abs-noun') Abstract noun
+          option(value='col-noun') Collective noun
+          option(value='count-noun') Countable
+          option(value='uncount-noun') Uncountable
+        br
+        br
+        label(style='padding-left:3em') Different forms:
+        .x
+          div
+            label(for='nounForm3rdPerson', style='padding-left:6em') 3rd person
+          div
+            input#inp3rdPerson.form-control(type="text", name='3rdPerson', style='margin-left:1em')
+        .x
+          div
+            label(for='nounFormPresentCont', style='padding-left:6em') Present cont.
+          div
+            input#inpPresentCont.form-control(type="text", name='presentCont', style='margin-left:1em')
+        .x
+          div
+            label(for='nounFormPast', style='padding-left:6em') Past
+          div
+            input#inpPast.form-control(type="text", name='Past', style='margin-left:1em')
+        .x
+          div
+            label(for='nounFormPastPart', style='padding-left:6em') Past part.
+          div
+            input#inpPastPart.form-control(type="text", name='pastPart', style='margin-left:1em')
+
+      button#btnAddMeaning.btn.btn-default.addButton(type='button', style='margin-left:2em; margin-top:1em', onclick='addMeaning(this.id)')
+        i.fa.fa-plus
+        | &nbsp; অর্থ
+
+  // Template for Meaning with option to add Sub-meaning
+  div#divMeaning.hide.divClsMeaning.form-inline
+    .x
+      div
+        label(style='margin-left:3em;') অর্থ (N)
+      div
+        input#inpMeaning.form-control(type='text', name='meaning', style='width: 40em; margin-left:2em')
+    .x
+      div
+        label(style='margin-left:4em') উদাহরণ
+      div
+        input#inpExample.form-control(type='text', name='example', style='width:40em; margin-left:2em')
+        button#btnAddSubMeaning.btn.btn-default.addButton(type='button', style='margin-left:2em; padding:4px 8px 4px 8px', onclick='addSubMeaning(this.id)')
+          i.fa.fa-plus
+          | &nbsp; অর্থান্তর
+
+  // Template for Sub-meaning
+  div#divSubMeaning.hide.divClsSubMeaning.form-inline
+    .x
+      div
+        label(style='padding-left:4em; margin-top:10px') অর্থান্তর (N-a)
+      div
+        input#inpSubMeaning.input1.form-control(type='text', name='subMeaning', style='width:40em; margin-left:2em')
+    .x
+      div
+        label(style='padding-left:5em') উদাহরণ
+      div
+        input#inpExampleSubMeaning.input2.form-control(type='text', name='exampleSubMeaning', style='width:40em; margin-left:2em')
+        button#btnRemoveSubMeaning.btn.btn-default.removeButton(type='button', style='margin-left:2em; padding:4px 8px 4px 8px', onclick='removeSubMeaning(this.id)')
+          i.fa.fa-minus
+          | &ensp; অর্থান্তর
+
+
+  script(type='text/javascript').
+    var bnChCons = ['ক','খ','গ','ঘ','ঙ','চ','ছ','জ','ঝ','ঞ','ট','ঠ','ড','ঢ','ণ','ত','থ','দ','ধ','ন','প','ফ','ব','ভ','ম','য','র','ল','শ','ষ','স','হ','ড়','ঢ়','য়','ৎ'];
+    var bnChVows = ['অ','আ','ই','ঈ','উ','ঊ','ঋ','এ','ঐ','ও','ঔ'];
+    var bnNums = ['১','২','৩','৪','৫','৬','৭','৮','৯','১০','১১','১২','১৩','১৪','১৫','১৬','১৭','১৮','১৯','২০','২১','২২','২৩','২৪','২৫','২৬','২৭','২৮','২৯','৩০','৩১','৩২','৩৩','৩৪','৩৫','৩৬','৩৭','৩৮','৩৯','৪০','৪১','৪২','৪৩','৪৪','৪৫','৪৬','৪৭','৪৮','৪৯','৫০'];
+    var meaningCntr = 1;
+    var subMeaningCntr = 1;
+
+    $(function () {
+
+    });
+
+    function addUsage(buttonId) {
+
+    };
+
+    function addMeaning(buttonId) {
+        var button = document.getElementById(buttonId);
+        var rootDivId = button.closest('.divClsPos').id;
+        console.log(buttonId);
+        console.log(rootDivId);
+        var clone = $('#divMeaning').clone();
+        clone.find("#inpMeaning").first().prop("id", "inpMeaning_" + meaningCntr);
+        clone.find("#inpExample").first().prop('id', 'inpExample_' + meaningCntr);
+        clone.find('button').prop('id', 'btnAddSubMeaning_' + meaningCntr);
+        clone
+            .removeClass('hide')
+            .attr('id', 'divMeaning' + meaningCntr)
+            // .insertAfter("div."+rootDivId+":last");
+            .insertBefore(button);
+
+        meaningCntr++;
+    };
+
+    function addSubMeaning(buttonId) {
+        var button = document.getElementById(buttonId);
+        var rootDivId = button.closest('.divMeaning').id;
+        console.log("ABC");
+        console.log(buttonId);
+        console.log(rootDivId);
+        // $("div[id='divMeaning']:last").after(
+        //     $('#divSubMeaning')
+        //         .clone()
+        //         .removeClass('hide')
+        //         .attr('id','divSubMeaning'+subMeaningCntr)
+        //         .closest('.input1').attr('id','subMeaning'+subMeaningCntr)
+        //         .closest('.input2').attr('id','exampleSubMeaning'+subMeaningCntr)
+        //         .closest('button').attr('id','exampleSubMeaning'+subMeaningCntr)
+        // );
+        var obj = $('#divSubMeaning').find("#subMeaning").first().prop("id");
+        console.log(obj);
+
+        var clone = $('#divSubMeaning').clone();
+        clone.find("#inpSubMeaning").first().prop("id", "inpSubMeaning_" + subMeaningCntr);
+        clone.find("#inpExampleSubMeaning").first().prop('id', 'inpExampleSubMeaning_' + subMeaningCntr);
+        clone.find('button').prop('id', 'btnRemoveSubMeaning_' + subMeaningCntr);
+        clone
+            .removeClass('hide')
+            .attr('id', 'divSubMeaning' + subMeaningCntr)
+            .appendTo("#"+rootDivId);
+
+        // $('#divSubMeaning')
+        //     .clone()
+        //     .find("#subMeaning").first().prop("id", "subMeaning" + subMeaningCntr)
+        //     .find("#exampleSubMeaning").first().prop('id', 'exampleSubMeaning' + subMeaningCntr)
+        //     .find('button').attr('id', 'exampleSubMeaning' + subMeaningCntr)
+        //     .removeClass('hide')
+        //     .attr('id', 'divSubMeaning' + subMeaningCntr)
+        //     .insertAfter("div.divMeaning:last");
+        console.log("DEF");
+
+        // var $template = $('#bookTemplate'),
+        //     $clone = $template
+        //         .clone()
+        //         .removeClass('hide')
+        //         .removeAttr('id')
+        //         .attr('data-book-index', counter)
+        //         .insertBefore($template);
+        subMeaningCntr++;
+    };
+
+    function removeSubMeaning(buttonId) {
+        // document.getElementById(objId).remove();
+        document.getElementById(buttonId).closest(".divClsSubMeaning").remove();
+    };
+
+    // $('#addMoreMeaning').click(function () {
+    //     $(this).before($(".divMeaning").clone());
+    // });
+
+    $('#formAddNew').on('submit', function(e) {
+        $("#submit").addClass("active");
+        e.preventDefault();
+        e.stopPropagation();
+        // Initiate Variables With Form Content
+
+
+        var data = {};
+        data.shopLocation = $("#shopLocation").val();
+        data.startDate = startDateEpoch;
+        data.endDate = endDateEpoch;
+        data.noOfRecoms = $("#noOfRecoms").val();
+
+        console.log(data);
+
+        $.ajax({
+            type: 'POST',
+            url: 'http://localhost:3000/addnew',
+            data: data,
+            dataType: 'json',
+            timeout: 10000,   // 10 seconds timeout
+            error: function(jqXHR, textStatus, errorThrown) {
+                console.log("--- Request failed or timed out ---");
+                console.log(textStatus);
+                console.log(errorThrown);
+                $("#submit").removeClass("active");
+            },
+            success: function(result) {
+                console.log("data: ", JSON.stringify(result));
+                if (result.success == "true"){
+                    generateTable(result.topN);
+                } else {
+                    //console.log("ABC");
+                    //- window.divRecom.style.visibility = 'visible';
+                    document.getElementById("header").innerHTML = "Failed to get any recommendations!";
+                    $("#submit").removeClass("active");
+                }
+            }
+        });
+    })
