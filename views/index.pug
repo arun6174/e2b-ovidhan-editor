@@ -21,26 +21,32 @@ block content
           form.form-horizontal#formAddNew(style='align:left')
             div.container
               .row
-                .form-group.col-md-3
+                .form-group.col-xs-2
                   label(for='mainword') Main Word
                   br
                   input#mainword.form-control(type="text", name="mainword")
-                .form-group.col-md-1
+                .form-group.col-xs-1
                   label
-                .form-group.col-md-3
+                .form-group.col-xs-2
                   label(for='altspelling') Alternate Spelling(s)
                   br
                   input#altspelling.form-control(type="text", name="altspelling")
-
-            div#usage
+                div.col-sm-6(style='float:right;padding:1em 0em 0em 2.5em;')
+                  button.btn.btn-primary.btn-lg.btn-purple(type="button", style='border-radius:2px;')
+                    i.fa.fa-plus
+                    | &nbsp; Usage
+                  button.btn.btn-primary.btn-lg.btn-primary(type="button", style='border-radius:2px;margin-left:6px;') Add New
+                  button.btn.btn-primary.btn-lg.btn-success(type="button", style='border-radius:2px;margin-left:6px;') Save
+                  
+            div#divUsage.divClsUsage
               hr
               label Usage
               br
               br
-              div.container.divPos#usage1pos1
-                div.form-group.form-inline
-                  label(for='posSelect') 1.1 &nbsp; Parts of Speech
-                  select.selectpicker#posSelect.form-control(name='selectpos', data-style='btn-primary', title='Select one', data-width='auto')
+              div#divPos.container.divClsPos
+                div#divSelectPos.form-group.form-inline
+                  label 1.1 &nbsp; Parts of Speech
+                  select.selectpicker#selectPos.clsSelectPos.form-control(name='selectPos', data-style='btn-default', title='Select one', data-width='auto')
                     option(value='noun') Noun
                     option(value='pron') Pronoun
                     option(value='verb') Verb
@@ -49,125 +55,172 @@ block content
                     option(value='conj') Conjunction
                     option(value='prep') Preposition
                     option(value='intr') Interjection
-                div#posNoun.form-group.form-inline
-                  label(for='plural', style='padding-left:3em') Plural
-                  input#plural.form-control(type="text", name='plural')
-                  label(for='posNounTypeSelect', style='padding-left:4em') Types
-                  select.selectpicker#posNounTypeSelect.form-control(name='selectTypesForNoun', data-style='btn-info', title='Select one', data-width='fit', multiple='', data-max-options='2')
-                    option(value='cm-noun') Common noun
-                    option(value='pr-noun') Proper noun
-                    option(value='abs-noun') Abstract noun
-                    option(value='col-noun') Collective noun
-                    option(value='count-noun') Countable
-                    option(value='uncount-noun') Uncountable
-                  br
-                  br
-                  label(style='padding-left:3em') Different forms:
-                  .x
-                    div
-                      label(for='nounForm3rdPerson', style='padding-left:6em') 3rd person
-                    div
-                      input#nounForm3rdPerson.form-control(type="text", name='3rdPerson', style='margin-left:1em')
-                  .x
-                    div
-                      label(for='nounFormPresentCont', style='padding-left:6em') Present cont.
-                    div
-                      input#nounFormPresentCont.form-control(type="text", name='presentCont', style='margin-left:1em')
-                  .x
-                    div
-                      label(for='nounFormPast', style='padding-left:6em') Past
-                    div
-                      input#nounFormPast.form-control(type="text", name='Past', style='margin-left:1em')
-                  .x
-                    div
-                      label(for='nounFormPastPart', style='padding-left:6em') Past part.
-                    div
-                      input#nounFormPastPart.form-control(type="text", name='pastPart', style='margin-left:1em')
-                //div#divMeaning.divMeaning.form-inline
-                //  .x
-                //    div
-                //      label(style='margin-left:3em;') অর্থ (N)
-                //    div
-                //      input#meaning.form-control(type='text', name='meaning', style='width: 40em; margin-left:2em')
-                //  .x
-                //    div
-                //      label(style='margin-left:4em') উদাহরণ
-                //    div
-                //      input#example.form-control(type='text', name='example', style='width:40em; margin-left:2em')
-                //      button#btnAddSubMeaning.btn.btn-default.addButton(type='button', style='margin-left:2em; padding:4px 8px 4px 8px', onclick='addSubMeaning(this.id)')
-                //        i.fa.fa-plus
-                //        | &nbsp; অর্থান্তর
+                
+                // Placeholder for PoS details
+                div#divPosDetails
 
-
-                button#btnAddMoreMeaning.btn.btn-default.addButton(type='button', style='margin-left:2em; margin-top:1em', onclick='addMoreMeaning(this.id)')
+                button#btnAddMeaning.btn.btn-default.addButton(type='button', style='margin-left:2em; margin-top:1em; padding:4px 8px 4px 8px;', onclick='addMeaning(this.id)')
                   i.fa.fa-plus
                   | &nbsp; অর্থ
+              
+              div#divHrDashed
+                hr.dashed
+              
+              div#divBtnGroupUsage.btn-group.col-md-6(data-toggle="buttons", style='float:right;margin:0px 0px 0px 30px')
+                button.btn.btn-default.btnClsCheckbox
+                  input#chkPhrases.chkClsButtonGrp(type="checkbox" name="phrases" value="Phrases")
+                  | Phrases
+                button.btn.btn-default.btnClsCheckbox
+                  input#chkPhrasalVerbs.chkClsButtonGrp(type="checkbox" name="phrasalVerbs" value="PhrasalVerbs")
+                  | Phrasal Verbs
+                button.btn.btn-default.btnClsCheckbox
+                  input#chkCompoundWords.chkClsButtonGrp(type="checkbox" name="compoundVerbs" value="Compound Words")
+                  | Compound Words
+                button.btn.btn-default.btnClsCheckbox
+                  input#chkDerivatives.chkClsButtonGrp(type="checkbox" name="derivatives" value="Derivatives")
+                  | Derivatives
+
+            div#divFooter(style='margin-top:100px;overflow:auto')
+              div.col-12
+                button.btn.btn-primary.btn-lg.btn-purple(type="button", style='border-radius:2px;float:left;margin:10px 0px 10px 0px;')
+                  i.fa.fa-plus
+                  | &nbsp; Usage
+              hr.last
+              div.col-12
+                button.btn.btn-primary.btn-lg.btn-primary(type="button", style='border-radius:2px;float:left;') Add New
+                button.btn.btn-primary.btn-lg.btn-success(type="button", style='border-radius:2px;margin-left:6px;float:right;') Save
 
         #search-edit.tab-pane(role='tabpanel')
           h4 Work in progress...
 
   // Template for Usage
-  div#divUsage.hide.divClsUsage
-    hr
-    label Usage
-    br
-    br
-    div#divPos.container.divClsPos
-      div.form-group.form-inline
-        label(for='posSelect') 1.1 &nbsp; Parts of Speech
-        select.selectpicker#selectPos.form-control(name='selectPos', data-style='btn-primary', title='Select one', data-width='auto')
-          option(value='noun') Noun
-          option(value='pron') Pronoun
-          option(value='verb') Verb
-          option(value='adj') Adjective
-          option(value='adv') Adverb
-          option(value='conj') Conjunction
-          option(value='prep') Preposition
-          option(value='intr') Interjection
-      div#divNoun.form-group.form-inline
-        label(for='plural', style='padding-left:3em') Plural
-        input#inpPlural.form-control(type="text", name='plural')
-        label(for='posNounTypeSelect', style='padding-left:4em') Types
-        select.selectpicker#selectNounType.form-control(name='selectNounType', data-style='btn-info', title='Select one', data-width='fit', multiple='', data-max-options='2')
-          option(value='cm-noun') Common noun
-          option(value='pr-noun') Proper noun
-          option(value='abs-noun') Abstract noun
-          option(value='col-noun') Collective noun
-          option(value='count-noun') Countable
-          option(value='uncount-noun') Uncountable
-        br
-        br
-        label(style='padding-left:3em') Different forms:
-        .x
-          div
-            label(for='nounForm3rdPerson', style='padding-left:6em') 3rd person
-          div
-            input#inp3rdPerson.form-control(type="text", name='3rdPerson', style='margin-left:1em')
-        .x
-          div
-            label(for='nounFormPresentCont', style='padding-left:6em') Present cont.
-          div
-            input#inpPresentCont.form-control(type="text", name='presentCont', style='margin-left:1em')
-        .x
-          div
-            label(for='nounFormPast', style='padding-left:6em') Past
-          div
-            input#inpPast.form-control(type="text", name='Past', style='margin-left:1em')
-        .x
-          div
-            label(for='nounFormPastPart', style='padding-left:6em') Past part.
-          div
-            input#inpPastPart.form-control(type="text", name='pastPart', style='margin-left:1em')
+  //- div#divUsage.hide.divClsUsage
+  //-   hr
+  //-   label Usage
+  //-   br
+  //-   br
+  //-   div#divPos.container.divClsPos
+  //-     div.form-group.form-inline
+  //-       label(for='posSelect') 1.1 &nbsp; Parts of Speech
+  //-       select.selectpicker#selectPos.form-control(name='selectPos', data-style='btn-primary', title='Select one', data-width='auto')
+  //-         option(value='noun') Noun
+  //-         option(value='pron') Pronoun
+  //-         option(value='verb') Verb
+  //-         option(value='adj') Adjective
+  //-         option(value='adv') Adverb
+  //-         option(value='conj') Conjunction
+  //-         option(value='prep') Preposition
+  //-         option(value='intr') Interjection
+  //-     div#divNoun.form-group.form-inline
+  //-       label(for='plural', style='padding-left:3em') Plural
+  //-       input#inpPlural.form-control(type="text", name='plural')
+  //-       label(for='posNounTypeSelect', style='padding-left:4em') Types
+  //-       select.selectpicker#selectNounType.form-control(name='selectNounType', data-style='btn-info', title='Select one', data-width='fit', multiple='', data-max-options='2')
+  //-         option(value='cm-noun') Common noun
+  //-         option(value='pr-noun') Proper noun
+  //-         option(value='abs-noun') Abstract noun
+  //-         option(value='col-noun') Collective noun
+  //-         option(value='count-noun') Countable
+  //-         option(value='uncount-noun') Uncountable
+  //-       br
+  //-       br
+  //-       label(style='padding-left:3em') Different forms:
+  //-       .x
+  //-         div
+  //-           label(for='nounForm3rdPerson', style='padding-left:6em') 3rd person
+  //-         div
+  //-           input#inp3rdPerson.form-control(type="text", name='3rdPerson', style='margin-left:1em')
+  //-       .x
+  //-         div
+  //-           label(for='nounFormPresentCont', style='padding-left:6em') Present cont.
+  //-         div
+  //-           input#inpPresentCont.form-control(type="text", name='presentCont', style='margin-left:1em')
+  //-       .x
+  //-         div
+  //-           label(for='nounFormPast', style='padding-left:6em') Past
+  //-         div
+  //-           input#inpPast.form-control(type="text", name='Past', style='margin-left:1em')
+  //-       .x
+  //-         div
+  //-           label(for='nounFormPastPart', style='padding-left:6em') Past part.
+  //-         div
+  //-           input#inpPastPart.form-control(type="text", name='pastPart', style='margin-left:1em')
 
-      button#btnAddMeaning.btn.btn-default.addButton(type='button', style='margin-left:2em; margin-top:1em', onclick='addMeaning(this.id)')
-        i.fa.fa-plus
-        | &nbsp; অর্থ
+  //-     button#btnAddMeaning.btn.btn-default.addButton(type='button', style='margin-left:2em; margin-top:1em; padding:4px 8px 4px 8px;', onclick='addMeaning(this.id)')
+  //-       i.fa.fa-plus
+  //-       | &nbsp; অর্থ
+
+  // Template for Noun details
+  div#divNoun.form-group.form-inline.divClsNoun.hide
+    label(for='plural', style='padding-left:3em') Plural
+    input#inpPlural.form-control(type="text", name='plural')
+    label(style='padding-left:4em') Types
+  
+  // Template for Noun Type selectpicker
+  select.selectpicker#selectNounType.hide.form-control(name='selectNounType', data-style='btn-default', title='Select one', data-width='fit', multiple='', data-max-options='2')
+    option(value='cm-noun') Common noun
+    option(value='pr-noun') Proper noun
+    option(value='abs-noun') Abstract noun
+    option(value='col-noun') Collective noun
+    option(value='count-noun') Countable
+    option(value='uncount-noun') Uncountable
+
+  // Template for Verb details
+  div#divVerb.form-group.form-inline.divClsVerb.hide
+    div(style='float:left;')
+      label(style='padding-left:3em') Different forms:
+      .x
+        div
+          label(style='padding-left:5em') 3rd person
+        div
+          input#inp3rdPerson.form-control(type="text", name='3rdPerson', style='margin-left:1em')
+      .x
+        div
+          label(style='padding-left:5em') Present cont.
+        div
+          input#inpPresentCont.form-control(type="text", name='presentCont', style='margin-left:1em')
+      .x
+        div
+          label(style='padding-left:5em') Past
+        div
+          input#inpPast.form-control(type="text", name='Past', style='margin-left:1em')
+      .x
+        div
+          label(style='padding-left:5em') Past part.
+        div
+          input#inpPastPart.form-control(type="text", name='pastPart', style='margin-left:1em')
+    div.divClsType(style='float:left;')
+      label(style='padding-left:2em') Types &emsp;
+  
+  // Template for Verb Type selectpicker
+  select.selectpicker#selectVerbType.hide.form-control(name='selectVerbType', data-style='btn-default', title='Select one', data-width='fit')
+    option(value='trans-verb') Transitive
+    option(value='intrans-verb') Intransitive
+    option(value='verb-both') Both
+
+  // Template for Adjective details
+  div#divAdj.form-group.form-inline.divClsAdj.hide
+    div(style='float:left;')
+      label(style='padding-left:3em') Different forms:
+      .x
+        div
+          label(style='padding-left:5em') Comparative
+        div
+          input#inpComparative.form-control(type="text", name='comparativeForm', style='margin-left:1em')
+      .x
+        div
+          label(style='padding-left:5em') Superlative
+        div
+          input#inpSuperlative.form-control(type="text", name='superlativeForm', style='margin-left:1em')
 
   // Template for Meaning with option to add Sub-meaning
-  div#divMeaning.hide.divClsMeaning.form-inline
+  div#divMeaning.hide.divClsMeaning.form-inline(style='margin-left:15px')
     .x
       div
-        label(style='margin-left:3em;') অর্থ (N)
+        button#btnRemoveMeaning.btn.btn-default.removeButton(type='button', style='padding:4px 8px 4px 8px', onclick='removeMeaning(this.id)')
+          i.fa.fa-close
+          //- | &ensp; অর্থ
+        label(style='margin-left:0.6em;') অর্থ (N)
       div
         input#inpMeaning.form-control(type='text', name='meaning', style='width: 40em; margin-left:2em')
     .x
@@ -188,140 +241,11 @@ block content
         input#inpSubMeaning.input1.form-control(type='text', name='subMeaning', style='width:40em; margin-left:2em')
     .x
       div
-        label(style='padding-left:5em') উদাহরণ
+        label(style='padding-left:5.5em') উদাহরণ
       div
         input#inpExampleSubMeaning.input2.form-control(type='text', name='exampleSubMeaning', style='width:40em; margin-left:2em')
         button#btnRemoveSubMeaning.btn.btn-default.removeButton(type='button', style='margin-left:2em; padding:4px 8px 4px 8px', onclick='removeSubMeaning(this.id)')
           i.fa.fa-minus
           | &ensp; অর্থান্তর
 
-
-  script(type='text/javascript').
-    var bnChCons = ['ক','খ','গ','ঘ','ঙ','চ','ছ','জ','ঝ','ঞ','ট','ঠ','ড','ঢ','ণ','ত','থ','দ','ধ','ন','প','ফ','ব','ভ','ম','য','র','ল','শ','ষ','স','হ','ড়','ঢ়','য়','ৎ'];
-    var bnChVows = ['অ','আ','ই','ঈ','উ','ঊ','ঋ','এ','ঐ','ও','ঔ'];
-    var bnNums = ['১','২','৩','৪','৫','৬','৭','৮','৯','১০','১১','১২','১৩','১৪','১৫','১৬','১৭','১৮','১৯','২০','২১','২২','২৩','২৪','২৫','২৬','২৭','২৮','২৯','৩০','৩১','৩২','৩৩','৩৪','৩৫','৩৬','৩৭','৩৮','৩৯','৪০','৪১','৪২','৪৩','৪৪','৪৫','৪৬','৪৭','৪৮','৪৯','৫০'];
-    var meaningCntr = 1;
-    var subMeaningCntr = 1;
-
-    $(function () {
-
-    });
-
-    function addUsage(buttonId) {
-
-    };
-
-    function addMeaning(buttonId) {
-        var button = document.getElementById(buttonId);
-        var rootDivId = button.closest('.divClsPos').id;
-        console.log(buttonId);
-        console.log(rootDivId);
-        var clone = $('#divMeaning').clone();
-        clone.find("#inpMeaning").first().prop("id", "inpMeaning_" + meaningCntr);
-        clone.find("#inpExample").first().prop('id', 'inpExample_' + meaningCntr);
-        clone.find('button').prop('id', 'btnAddSubMeaning_' + meaningCntr);
-        clone
-            .removeClass('hide')
-            .attr('id', 'divMeaning' + meaningCntr)
-            // .insertAfter("div."+rootDivId+":last");
-            .insertBefore(button);
-
-        meaningCntr++;
-    };
-
-    function addSubMeaning(buttonId) {
-        var button = document.getElementById(buttonId);
-        var rootDivId = button.closest('.divMeaning').id;
-        console.log("ABC");
-        console.log(buttonId);
-        console.log(rootDivId);
-        // $("div[id='divMeaning']:last").after(
-        //     $('#divSubMeaning')
-        //         .clone()
-        //         .removeClass('hide')
-        //         .attr('id','divSubMeaning'+subMeaningCntr)
-        //         .closest('.input1').attr('id','subMeaning'+subMeaningCntr)
-        //         .closest('.input2').attr('id','exampleSubMeaning'+subMeaningCntr)
-        //         .closest('button').attr('id','exampleSubMeaning'+subMeaningCntr)
-        // );
-        var obj = $('#divSubMeaning').find("#subMeaning").first().prop("id");
-        console.log(obj);
-
-        var clone = $('#divSubMeaning').clone();
-        clone.find("#inpSubMeaning").first().prop("id", "inpSubMeaning_" + subMeaningCntr);
-        clone.find("#inpExampleSubMeaning").first().prop('id', 'inpExampleSubMeaning_' + subMeaningCntr);
-        clone.find('button').prop('id', 'btnRemoveSubMeaning_' + subMeaningCntr);
-        clone
-            .removeClass('hide')
-            .attr('id', 'divSubMeaning' + subMeaningCntr)
-            .appendTo("#"+rootDivId);
-
-        // $('#divSubMeaning')
-        //     .clone()
-        //     .find("#subMeaning").first().prop("id", "subMeaning" + subMeaningCntr)
-        //     .find("#exampleSubMeaning").first().prop('id', 'exampleSubMeaning' + subMeaningCntr)
-        //     .find('button').attr('id', 'exampleSubMeaning' + subMeaningCntr)
-        //     .removeClass('hide')
-        //     .attr('id', 'divSubMeaning' + subMeaningCntr)
-        //     .insertAfter("div.divMeaning:last");
-        console.log("DEF");
-
-        // var $template = $('#bookTemplate'),
-        //     $clone = $template
-        //         .clone()
-        //         .removeClass('hide')
-        //         .removeAttr('id')
-        //         .attr('data-book-index', counter)
-        //         .insertBefore($template);
-        subMeaningCntr++;
-    };
-
-    function removeSubMeaning(buttonId) {
-        // document.getElementById(objId).remove();
-        document.getElementById(buttonId).closest(".divClsSubMeaning").remove();
-    };
-
-    // $('#addMoreMeaning').click(function () {
-    //     $(this).before($(".divMeaning").clone());
-    // });
-
-    $('#formAddNew').on('submit', function(e) {
-        $("#submit").addClass("active");
-        e.preventDefault();
-        e.stopPropagation();
-        // Initiate Variables With Form Content
-
-
-        var data = {};
-        data.shopLocation = $("#shopLocation").val();
-        data.startDate = startDateEpoch;
-        data.endDate = endDateEpoch;
-        data.noOfRecoms = $("#noOfRecoms").val();
-
-        console.log(data);
-
-        $.ajax({
-            type: 'POST',
-            url: 'http://localhost:3000/addnew',
-            data: data,
-            dataType: 'json',
-            timeout: 10000,   // 10 seconds timeout
-            error: function(jqXHR, textStatus, errorThrown) {
-                console.log("--- Request failed or timed out ---");
-                console.log(textStatus);
-                console.log(errorThrown);
-                $("#submit").removeClass("active");
-            },
-            success: function(result) {
-                console.log("data: ", JSON.stringify(result));
-                if (result.success == "true"){
-                    generateTable(result.topN);
-                } else {
-                    //console.log("ABC");
-                    //- window.divRecom.style.visibility = 'visible';
-                    document.getElementById("header").innerHTML = "Failed to get any recommendations!";
-                    $("#submit").removeClass("active");
-                }
-            }
-        });
-    })
+  // Template for Phrases

@@ -46,8 +46,8 @@ a {
   }
 }
 
-.main-box{
-  margin-bottom: 40px;
+.main-box {
+  margin-bottom: 15px;
   /*padding: 0 20px 40px;*/
 }
 
@@ -106,7 +106,7 @@ a {
   margin-bottom: 25px;
   margin: 0 auto;
   max-width: 90%;
-  min-height: 200px;
+  min-height: 550px;
 }
 
 input[type="text"] {
@@ -135,10 +135,99 @@ hr {
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
-  border-color: #EEEEEE;
+  border-color: #DDDDDD;
   border-style: solid none;
   border-width: 1px 0;
   margin: 12px 0;
+}
+
+hr.dashed {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: #DDDDDD;
+  border-style: dashed none;
+  border-width: 1px 0;
+  margin-left: 3%;
+  margin-top: 2em;
+  margin-bottom: 1em;
+  width: 97%;
+}
+
+hr.last {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: rgb(179, 13, 7);
+  border-style: solid none;
+  border-width: 1px 0;
+  /* margin-top: 15px;
+  margin-bottom: 15px; */
+  width: 100%;
+}
+
+hr.transparent {
+  -moz-border-bottom-colors: none;
+  -moz-border-image: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  border-color: rgb(255, 255, 255);
+  border-style: solid none;
+  border-width: 1px 0;
+  /* margin-top: 40px;
+  margin-bottom: 40px; */
+  width: 100%;
+}
+
+.btn-purple { 
+  color: #ffffff; 
+  background-color: #611BBD; 
+  border-color: #130269; 
+} 
+ 
+.btn-purple:hover, 
+.btn-purple:focus, 
+.btn-purple:active, 
+.btn-purple.active, 
+.open .dropdown-toggle.btn-purple { 
+  color: #ffffff; 
+  background-color: #49247A; 
+  border-color: #130269; 
+} 
+ 
+.btn-purple:active, 
+.btn-purple.active, 
+.open .dropdown-toggle.btn-purple { 
+  background-image: none; 
+} 
+ 
+.btn-purple.disabled, 
+.btn-purple[disabled], 
+fieldset[disabled] .btn-purple, 
+.btn-purple.disabled:hover, 
+.btn-purple[disabled]:hover, 
+fieldset[disabled] .btn-purple:hover, 
+.btn-purple.disabled:focus, 
+.btn-purple[disabled]:focus, 
+fieldset[disabled] .btn-purple:focus, 
+.btn-purple.disabled:active, 
+.btn-purple[disabled]:active, 
+fieldset[disabled] .btn-purple:active, 
+.btn-purple.disabled.active, 
+.btn-purple[disabled].active, 
+fieldset[disabled] .btn-purple.active { 
+  background-color: #611BBD; 
+  border-color: #130269; 
+} 
+ 
+.btn-purple .badge { 
+  color: #611BBD; 
+  background-color: #ffffff; 
 }
 
 /*.form-inline {*/
