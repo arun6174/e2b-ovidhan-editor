@@ -40,13 +40,13 @@ block content
                   
             div.divClsUsage#divUsage_1(data-index='1')
               hr
-              label Usage
-              br
-              br
-              div.container.divClsPos#divPos_1-1
-                div.form-group.form-inline#divSelectPos_1-1
-                  label 1.1 &nbsp; Part of Speech
-                  select.selectpicker.clsSelectPos.form-control#selectPos_1-1(name='selectPos', data-style='btn-default', title='Select one', data-width='auto')
+              label Usage 1
+              hr.dashed
+              div.container.divClsPos#divPos_1-1(data-index='1-1')
+                div.form-group.form-inline#divSelectPos_1-1(data-index='1-1')
+                  label 
+                    font(color='#FA8072') 1.1 &nbsp; Part of Speech
+                  select.selectpicker.clsSelectPos.form-control#selectPos_1-1(data-index='1-1', name='selectPos', data-style='btn-default', title='Select one', data-width='auto')
                     option(value='noun') Noun
                     option(value='pron') Pronoun
                     option(value='verb') Verb
@@ -57,47 +57,48 @@ block content
                     option(value='intr') Interjection
                 
                 // Placeholder for PoS details
-                div#divPosDetails_1-1
+                div#divPosDetails_1-1(data-index='1-1')
 
-                button#btnAddMeaning.btn.btn-default.addButton(type='button', style='margin-left:2em; margin-top:1em; padding:4px 8px 4px 8px;', onclick='addMeaning(this.id)')
-                  i.fa.fa-plus
-                  | &nbsp; অর্থ
+                div#divMeaningSection_1-1(data-index='1-1',style='margin:0px 0px 0px 10px')
+                  button#btnAddMeaning.btn.btn-default.addButton(type='button', style='margin-left:2em; margin-top:1em; padding:4px 8px 4px 8px;', onclick='addMeaning(this)')
+                    i.fa.fa-plus
+                    | &nbsp; অর্থ
               
-              div#divPhrasesPlaceholder_1
+              div#divPhrasesPlaceholder_1(data-index='1')
 
 
-              div#divPhrasalVerbsPlaceholder_1
+              div#divPhrasalVerbsPlaceholder_1(data-index='1')
 
 
-              div#divCompoundWordsPlaceholder_1
+              div#divCompoundWordsPlaceholder_1(data-index='1')
 
 
-              div#divDerivativesPlaceholder_1
+              div#divDerivativesPlaceholder_1(data-index='1')
               
               
               div#divHrDashed
                 hr.dashed
               
-              div.divClsUsageCtrlButtons#divUsageCtrlButtons_1
+              div.divClsUsageCtrlButtons#divUsageCtrlButtons_1(data-index='1')
                 div.col-md-2(style='float:left;padding:0px 0px 0px 30px')
-                  button#btnAddPoS.btn.btn-primary.btn-cgreen(type='button', onclick='addPartOfSpeech(this.id)')
+                  button.btn.btn-default#btnAddPoS_1(data-index='1', type='button', style='color:#FA8072', onclick='addPartOfSpeech(this.id)')
                     i.fa.fa-plus
                     | &nbsp; Part of Speech
-                div#divBtnGroupUsage.btn-group.col-md-7(data-toggle="buttons", style='float:right;padding:0px 0px 0px 60px')
+                div.btn-group.col-md-7#divBtnGroupUsage_1(data-index='1', data-toggle="buttons", style='float:right;padding:0px 0px 0px 60px')
                   button.btn.btn-default.btnClsCheckbox
-                    input#chkPhrases.chkClsButtonGrp(type="checkbox" name="phrases")
+                    input.chkClsButtonGrp#chkPhrases_1(data-index='1', type="checkbox" name="phrases")
                     i.fa.fa-plus
                       | &nbsp; Phrases
                   button.btn.btn-default.btnClsCheckbox
-                    input#chkPhrasalVerbs.chkClsButtonGrp(type="checkbox" name="phrasalVerbs")
+                    input.chkClsButtonGrp#chkPhrasalVerbs_1(data-index='1', type="checkbox" name="phrasalVerbs")
                     i.fa.fa-plus
                       | &nbsp; Phrasal Verbs
                   button.btn.btn-default.btnClsCheckbox
-                    input#chkCompoundWords.chkClsButtonGrp(type="checkbox" name="compoundWords")
+                    input.chkClsButtonGrp#chkCompoundWords_1(data-index='1', type="checkbox" name="compoundWords")
                     i.fa.fa-plus
                       | &nbsp; Compound Words
                   button.btn.btn-default.btnClsCheckbox
-                    input#chkDerivatives.chkClsButtonGrp(type="checkbox" name="derivatives")
+                    input.chkClsButtonGrp#chkDerivatives_1(data-index='1', type="checkbox" name="derivatives")
                     i.fa.fa-plus
                       | &nbsp; Derivatives
 
@@ -172,13 +173,13 @@ block content
   //-       | &nbsp; অর্থ
 
   // Template for Noun details
-  div#divNoun.form-group.form-inline.divClsNoun.hide
+  div.form-group.form-inline.divClsNoun.hide#divNoun
     label(for='plural', style='padding-left:3em') Plural
-    input#inpPlural.form-control(type="text", name='plural')
+    input.form-control#inpPlural(type="text", name='plural')
     label(style='padding-left:4em') Types
   
   // Template for Noun Type selectpicker
-  select.selectpicker#selectNounType.hide.form-control(name='selectNounType', data-style='btn-default', title='Select one', data-width='fit', multiple='', data-max-options='2')
+  select.selectpicker.form-control.hide#selectNounType(name='selectNounType', data-style='btn-default', title='Select one', data-width='fit', multiple='', data-max-options='2')
     option(value='cm-noun') Common noun
     option(value='pr-noun') Proper noun
     option(value='abs-noun') Abstract noun
@@ -187,29 +188,29 @@ block content
     option(value='uncount-noun') Uncountable
 
   // Template for Verb details
-  div#divVerb.form-group.form-inline.divClsVerb.hide
+  div.form-group.form-inline.divClsVerb.hide#divVerb
     div(style='float:left;')
       label(style='padding-left:3em') Different forms:
       .x
         div
           label(style='padding-left:5em') 3rd person
         div
-          input#inp3rdPerson.form-control(type="text", name='3rdPerson', style='margin-left:1em')
+          input.form-control#inp3rdPerson(type="text", name='3rdPerson', style='margin-left:1em')
       .x
         div
           label(style='padding-left:5em') Present cont.
         div
-          input#inpPresentCont.form-control(type="text", name='presentCont', style='margin-left:1em')
+          input.form-control#inpPresentCont(type="text", name='presentCont', style='margin-left:1em')
       .x
         div
           label(style='padding-left:5em') Past
         div
-          input#inpPast.form-control(type="text", name='Past', style='margin-left:1em')
+          input.form-control#inpPast(type="text", name='Past', style='margin-left:1em')
       .x
         div
           label(style='padding-left:5em') Past part.
         div
-          input#inpPastPart.form-control(type="text", name='pastPart', style='margin-left:1em')
+          input.form-control#inpPastPart(type="text", name='pastPart', style='margin-left:1em')
     div.divClsType(style='float:left;')
       label(style='padding-left:2em') Types &emsp;
   
@@ -269,17 +270,118 @@ block content
           i.fa.fa-minus
           | &ensp; অর্থান্তর
 
-  // Template for Phrases
-  div#divPhrases.hide.divClsPhrases
+  //---------- Template for Phrases ----------
+  div.hide.divClsPhrases#divPhrases(data-index='1')
     hr.dashed
-    div#divContainerPhrases.container
+    p
+      font(color='#0000ff') &emsp;&ensp;
+        strong Phrases
+    div.container#divContainerPhrases(data-index='1',style='margin:0px 0px 0px 0px')
+    // Placeholder for one or more phrases
+    div.col.xs-8
+      button.btn.btn-default.btnClsAddMorePhrase#btnAddMorePhrase(type='button', style='float:right; margin:0px 20px 10px 0px; padding:4px 8px 4px 8px;', onclick='addMorePhrase(this)')
+        i.fa.fa-plus
+        | &nbsp; Phrase
 
-
-  // Template for (individual) Phrase
-  div#divPhrase.hide.form-group.form-inline.divClsPhrase
-    label X. &nbsp; Phrase
-    input#inpPhrase.form-control(type="text", name='presentCont', style='margin-left:1em')
+  //----- Template for (individual) Phrase -----
+  div.hide.form-inline.divClsPhrase#divPhrase(data-index='1-1',style='margin:15px 0px 0px 25px')
+    .x
+      div
+        button.btn.btn-default#btnRemovePhrase(type='button', style='padding:4px 8px 4px 8px; margin:0px 8px 0px 0px;', onclick='removePhrase(this.id)')
+          i.fa.fa-close
+      div
+        label X. &nbsp; Phrase
+      div
+        input#inpPhrase.form-control(type="text", name='phrase', style='width:40em;margin-left:1em')
     br
-    button#btnAddMeaning.btn.btn-default.addButton(type='button', style='margin-left:2em; margin-top:1em; padding:4px 8px 4px 8px;', onclick='addMeaning(this.id)')
-      i.fa.fa-plus
-      | &nbsp; অর্থ
+    .col.xs-2
+      button.btn.btn-default.btnClsAddMeaning#btnAddMeaning(type='button', style='margin:0px 0px 0px 30px; padding:4px 8px 4px 8px;', onclick='addMeaning(this)')
+        i.fa.fa-plus
+        | &nbsp; অর্থ
+
+  //~~~~~~~~~~ Template for Phrasal verbs ~~~~~~~~~~
+  div.hide.divClsPhrasalVerbs#divPhrasalVerbs(data-index='1')
+    hr.dashed
+    p
+      font(color='#00bb17') &emsp;&ensp;
+        strong Phrasal Verbs
+    div.container#divContainerPhrasalVerbs(data-index='1',style='margin:0px 0px 0px 0px')
+    // Placeholder for one or more phrasal verbs
+    div.col.xs-8
+      button.btn.btn-default.btnClsAddMorePhrasalVerb#btnAddMorePhrasalVerb(type='button', style='float:right; margin:0px 20px 10px 0px; padding:4px 8px 4px 8px;', onclick='addMorePhrasalVerb(this)')
+        i.fa.fa-plus
+        | &nbsp; Phrasal Verb
+
+  //~~~~~ Template for (individual) Phrasal verb ~~~~~
+  div.hide.form-inline.divClsIndPhrasalVerb#divIndPhrasalVerb(data-index='1-1',style='margin:15px 0px 0px 25px')
+    .x
+      div
+        button.btn.btn-default#btnRemovePhrasalVerb(type='button', style='padding:4px 8px 4px 8px; margin:0px 8px 0px 0px;', onclick='removePhrasalVerb(this.id)')
+          i.fa.fa-close
+      div
+        label X. &nbsp; Phrasal Verb
+      div
+        input#inpPhrasalVerb.form-control(type="text", name='phrasalVerb', style='width:40em;margin-left:1em')
+    br
+    .col.xs-2
+      button.btn.btn-default.btnClsAddMeaning#btnAddMeaning(type='button', style='margin:0px 0px 0px 30px; padding:4px 8px 4px 8px;', onclick='addMeaning(this)')
+        i.fa.fa-plus
+        | &nbsp; অর্থ
+
+  //++++++++++ Template for Compound words ++++++++++
+  div.hide.divClsCompoundWords#divCompoundWords(data-index='1')
+    hr.dashed
+    p
+      font(color='#e38600') &emsp;&ensp;
+        strong Compound Words
+    div.container#divContainerCompoundWords(data-index='1',style='margin:0px 0px 0px 0px')
+    // Placeholder for one or more compound words
+    div.col.xs-8
+      button.btn.btn-default.btnClsAddMoreCompoundWord#btnAddMoreCompoundWord(type='button', style='float:right; margin:0px 20px 10px 0px; padding:4px 8px 4px 8px;', onclick='addMoreCompoundWord(this)')
+        i.fa.fa-plus
+        | &nbsp; Compound Word
+
+  //+++++ Template for (individual) Compound word +++++
+  div.hide.form-inline.divClsIndCompoundWord#divIndCompoundWord(data-index='1-1',style='margin:15px 0px 0px 25px')
+    .x
+      div
+        button.btn.btn-default#btnRemoveCompoundWord(type='button', style='padding:4px 8px 4px 8px; margin:0px 8px 0px 0px;', onclick='removeCompoundWord(this.id)')
+          i.fa.fa-close
+      div
+        label X. &nbsp; Compound Word
+      div
+        input#inpCompoundWord.form-control(type="text", name='compoundWord', style='width:40em;margin-left:1em')
+    br
+    .col.xs-2
+      button.btn.btn-default.btnClsAddMeaning#btnAddMeaning(type='button', style='margin:0px 0px 0px 30px; padding:4px 8px 4px 8px;', onclick='addMeaning(this)')
+        i.fa.fa-plus
+        | &nbsp; অর্থ
+
+  //========== Template for Derivatives ==========
+  div.hide.divClsDerivatives#divDerivatives(data-index='1')
+    hr.dashed
+    p
+      font(color='#7d00df') &emsp;&ensp;
+        strong Derivatives
+    div.container#divContainerDerivatives(data-index='1',style='margin:0px 0px 0px 0px')
+    // Placeholder for one or more derivatives
+    div.col.xs-8
+      button.btn.btn-default.btnClsAddMoreDerivative#btnAddMoreDerivative(type='button', style='float:right; margin:0px 20px 10px 0px; padding:4px 8px 4px 8px;', onclick='addMoreDerivative(this)')
+        i.fa.fa-plus
+        | &nbsp; Derivative
+
+  //===== Template for (individual) Derivative =====
+  div.hide.form-inline.divClsIndDerivative#divIndDerivative(data-index='1-1',style='margin:15px 0px 0px 25px')
+    .x
+      div
+        button.btn.btn-default#btnRemoveDerivative(type='button', style='padding:4px 8px 4px 8px; margin:0px 8px 0px 0px;', onclick='removeDerivative(this.id)')
+          i.fa.fa-close
+      div
+        label X. &nbsp; Derivative
+      div
+        input#inpDerivative.form-control(type="text", name='derivative', style='width:40em;margin-left:1em')
+    br
+    .col.xs-2
+      button.btn.btn-default.btnClsAddMeaning#btnAddMeaning(type='button', style='margin:0px 0px 0px 30px; padding:4px 8px 4px 8px;', onclick='addMeaning(this)')
+        i.fa.fa-plus
+        | &nbsp; অর্থ

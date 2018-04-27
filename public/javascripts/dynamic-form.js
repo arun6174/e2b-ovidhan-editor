@@ -4,9 +4,11 @@ var bnNums = ['১','২','৩','৪','৫','৬','৭','৮','৯','১০','�
 var usageCntr = 0;
 var meaningCntr = 0;
 var subMeaningCntr = 0;
-var posCntr = 0;
+var posCntr = 1;
 var phraseCntr = 0;
-
+var phrasalVerbCntr = 0;
+var compoundWordCntr = 0;
+var derivativeCntr = 0;
 
 $( document ).ready(function() {
     console.log( "ready!" );
@@ -30,38 +32,46 @@ $( document ).ready(function() {
 $(function () {
 
     $(".chkClsButtonGrp").change(function() {
+        var usageIndex = $(this).data('index');
         if (this.checked) {
-            this.closest('.btnClsCheckbox').style.backgroundColor = '#f0ad4e';//'#5cb85c';
-            $(this).siblings('i').first().removeClass('fa-plus').addClass('fa-times-circle');
+            this.closest('.btnClsCheckbox').style.backgroundColor = '#d5dbdb';// '#f8c471';
+            var i = $(this).siblings('i').first();
+            i.removeClass('fa-plus').addClass('fa-times-circle');
             if (this.name == 'phrases') {
-                addPhraseSection(this.id);
+                i.css('color', '#0000ff');
+                addPhraseSection(usageIndex);
             } else if (this.name == 'phrasalVerbs') {
-                addPhrasalVerbSection(this.id);
+                i.css('color', '#00bb17');
+                addPhrasalVerbSection(usageIndex);
             } else if (this.name == 'compoundWords') {
-                addCompoundWordSection(this.id);
+                i.css('color', '#e38600');
+                addCompoundWordSection(usageIndex);
             } else {
-                addDerivativeSection(this.id);
+                i.css('color', '#7d00df');
+                addDerivativeSection(usageIndex);
             }
         } else {
             this.closest('.btnClsCheckbox').style.backgroundColor = '';
-            $(this).siblings('i').first().removeClass('fa-times-circle').addClass('fa-plus');
+            var i = $(this).siblings('i').first();
+            i.removeClass('fa-times-circle').addClass('fa-plus');
             if (this.name == 'phrases') {
-                removePhraseSection(this.id);
+                i.css('color', '');
+                removePhraseSection(usageIndex);
             } else if (this.name == 'phrasalVerbs') {
-                removePhrasalVerbSection(this.id);
+                i.css('color', '');
+                removePhrasalVerbSection(usageIndex);
             } else if (this.name == 'compoundWords') {
-                removeCompoundWordSection(this.id);
+                i.css('color', '');
+                removeCompoundWordSection(usageIndex);
             } else {
-                removeDerivativeSection(this.id);
+                i.css('color', '');
+                removeDerivativeSection(usageIndex);
             }
         }
     });
 
     $('.selectpicker.clsSelectPos').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
-        // console.log($(this).val());
-        // console.log($(e.currentTarget).val());
-        // console.log($(this).prop('id'));
-        // console.log(newValue, oldValue);
+        var divPosDetailId = '#divPosDetails_' + $(this).data('index');
         if ($(this).val() == "noun") {
             if ($("#divVerb_"+1).length > 0) {
                 $("#divVerb_"+1).remove();
@@ -80,7 +90,7 @@ $(function () {
                     .hide()
                     .removeClass('hide')
                     .attr('id', 'divNoun_' + posCntr)
-                    .appendTo("#divPosDetails")
+                    .appendTo(divPosDetailId)
                     .show('fast');
                 newSP.appendTo(clone.closest('.divClsNoun'));
                 newSP.selectpicker('refresh');
@@ -105,7 +115,7 @@ $(function () {
                     .hide()
                     .removeClass('hide')
                     .attr('id', 'divVerb_' + posCntr)
-                    .appendTo("#divPosDetails")
+                    .appendTo(divPosDetailId)
                     .show('fast');
                 newSP.appendTo(clone.find('.divClsType').first());
                 newSP.selectpicker('refresh');
@@ -124,7 +134,7 @@ $(function () {
                     .hide()
                     .removeClass('hide')
                     .attr('id', 'divAdj_' + posCntr)
-                    .appendTo("#divPosDetails")
+                    .appendTo(divPosDetailId)
                     .show('fast');
             }
         } else {
@@ -150,66 +160,248 @@ function addUsage(buttonId) {
 
 };
 
-function addPhraseSection(buttonId) {
-    var parentDivUsageId = document.getElementById(buttonId).closest('.divClsUsage').id;
-    // console.log(parentDivUsageId);
-    // console.log($('#'+parentDivUsageId).data('index'));
+//------------------------- Phrases -------------------------
+function addPhraseSection(usageIndex) {
+    phraseCntr++;
+    var divPhrases = $('#divPhrases').clone();
+    divPhrases.data("index", usageIndex);
     
-    // var divTargetId = $('#'+button.closest('.divClsUsage').id).find('#divPhrasesPlaceholder');
-    // console.log(buttonId);
-    // console.log(divTargetId);
-    // phraseCntr++;
-    // var divPhrases = $('#divPhrases').clone();
-    // divPhrases.find("#divContainerPhrases").first().prop("id", "divContainerPhrases_" + usageCntr);
+    var divContainerPhrases = divPhrases.find("#divContainerPhrases").first();
+    divContainerPhrases.prop("id", "divContainerPhrases_" + usageIndex);
+    divContainerPhrases.data("index", usageIndex);
 
-    // var divIndivPhrase = $('#divPhrase').clone();
-    // divIndivPhrase.find('label').text(phraseCntr + ' &nbsp; Phrase');
-    // divIndivPhrase.find("#inpPhrase").first().prop("id", "inpPhrase_" + phraseCntr);
+    var divIndPhrase = $('#divPhrase').clone();
+    divIndPhrase.find('label').html('<font color="#5555ff">' + phraseCntr + '. &nbsp; Phrase</font>');
+    var inpPhrase = divIndPhrase.find("#inpPhrase").first();
+    inpPhrase.prop("id", "inpPhrase_" + usageIndex+'-'+phraseCntr);
+    inpPhrase.data("index", usageIndex+'-'+phraseCntr);
     
-    // divIndivPhrase
-    //     .hide()
-    //     .removeClass('hide')
-    //     .attr('id', '#divPhrase_' + phraseCntr)
-    //     .appendTo('divContainerPhrases_' + usageCntr);
-
-    // divPhrases
-    //     .hide()
-    //     .removeClass('hide')
-    //     .attr('id', '#divPhrase_' + usageCntr)
-    //     .appendTo('#divPhrasesPlaceholder_'+usageCntr)
-    //     show('fast');
+    divPhrases
+        .hide()
+        .removeClass('hide')
+        .prop('id', 'divPhrases_' + usageIndex)
+        .appendTo('#divPhrasesPlaceholder_' + usageIndex);
+    divIndPhrase
+        .hide()
+        .removeClass('hide')
+        .prop('id', 'divPhrase_' + usageIndex+'-'+phraseCntr)
+        .appendTo('#divContainerPhrases_' + usageIndex);
+    divPhrases.show('fast');
+    divIndPhrase.show('fast');
 };
 
-function removePhraseSection(buttonId) {
-    var divId = document.getElementById(buttonId).closest(".divClsUsge").find('.divClsPhrases').first().id;
-    $("#"+divId).hide('fast', function(){ $("#"+divId).remove(); });
+function removePhraseSection(usageIndex) {
+    // var divId = document.getElementById(buttonId).closest(".divClsUsge").find('.divClsPhrases').first().id;
+    $('#divPhrases_'+usageIndex).hide('fast', function(){ $('#divPhrases_'+usageIndex).remove(); });
     phraseCntr = 0;
 }
 
-function addMorePhrase(buttonId) {
+function addMorePhrase(button) {
+    var usageIndex = $('#'+button.closest('.divClsPhrases').id).data("index");
+    console.log(usageIndex);
     phraseCntr++;
-    var divIndivPhrase = $('#divPhrase').clone();
-    divIndivPhrase.find('label').text(phraseCntr + ' &nbsp; Phrase');
-    divIndivPhrase.find("#inpPhrase").first().prop("id", "inpPhrase_" + phraseCntr);
+    var divIndPhrase = $('#divPhrase').clone();
+    divIndPhrase.find('label').html('<font color="#5555ff">' + phraseCntr + '. &nbsp; Phrase</font>');
+    var inpPhrase = divIndPhrase.find("#inpPhrase").first();
+    inpPhrase.prop("id", "inpPhrase_" + usageIndex+'-'+phraseCntr);
+    inpPhrase.data("index", usageIndex+'-'+phraseCntr);
     
-    divIndivPhrase
+    divIndPhrase
         .hide()
         .removeClass('hide')
-        .attr('id', '#divPhrase_' + phraseCntr)
-        .appendTo('divContainerPhrases_' + usageCntr);
+        .prop('id', 'divPhrase_' + usageIndex+'-'+phraseCntr)
+        .appendTo('#divContainerPhrases_' + usageIndex)
+        .show('fast');
 };
 
 function removePhrase(buttonId) {
     var divId = document.getElementById(buttonId).closest(".divClsPhrase").id;
     $("#"+divId).hide('fast', function(){ $("#"+divId).remove(); });
-    phraseCntr = 0;
+    phraseCntr--;
 }
 
-function addMeaning(buttonId) {
-    var button = document.getElementById(buttonId);
-    var rootDivId = button.closest('.divClsPos').id;
-    console.log(buttonId);
-    console.log(rootDivId);
+//------------------------- Phrasal Verbs -------------------------
+function addPhrasalVerbSection(usageIndex) {
+    phrasalVerbCntr++;
+    var divPhrasalVerbs = $('#divPhrasalVerbs').clone();
+    divPhrasalVerbs.data("index", usageIndex);
+    
+    var divContainerPhrasalVerbs = divPhrasalVerbs.find("#divContainerPhrasalVerbs").first();
+    divContainerPhrasalVerbs.prop("id", "divContainerPhrasalVerbs_" + usageIndex);
+    divContainerPhrasalVerbs.data("index", usageIndex);
+
+    var divIndPhrasalVerb = $('#divIndPhrasalVerb').clone();
+    divIndPhrasalVerb.find('label').html('<font color="#0bdc25">' + phrasalVerbCntr + '. &nbsp; Phrasal Verb</font>');
+    var inpPhrasalVerb = divIndPhrasalVerb.find("#inpPhrasalVerb").first();
+    inpPhrasalVerb.prop("id", "inpPhrasalVerb_" + usageIndex+'-'+phrasalVerbCntr);
+    inpPhrasalVerb.data("index", usageIndex+'-'+phrasalVerbCntr);
+    
+    divPhrasalVerbs
+        .hide()
+        .removeClass('hide')
+        .prop('id', 'divPhrasalVerbs_' + usageIndex)
+        .appendTo('#divPhrasalVerbsPlaceholder_' + usageIndex);
+    divIndPhrasalVerb
+        .hide()
+        .removeClass('hide')
+        .prop('id', 'divPhrasalVerb_' + usageIndex+'-'+phrasalVerbCntr)
+        .appendTo('#divContainerPhrasalVerbs_' + usageIndex);
+    divPhrasalVerbs.show('fast');
+    divIndPhrasalVerb.show('fast');
+};
+
+function removePhrasalVerbSection(usageIndex) {
+    // var divId = document.getElementById(buttonId).closest(".divClsUsge").find('.divClsPhrases').first().id;
+    $('#divPhrasalVerbs_'+usageIndex).hide('fast', function(){ $('#divPhrasalVerbs_'+usageIndex).remove(); });
+    phrasalVerbCntr = 0;
+}
+
+function addMorePhrasalVerb(button) {
+    var usageIndex = $('#'+button.closest('.divClsPhrasalVerbs').id).data("index");
+    console.log(usageIndex);
+    phrasalVerbCntr++;
+    var divIndPhrasalVerb = $('#divIndPhrasalVerb').clone();
+    divIndPhrasalVerb.find('label').html('<font color="#0bdc25">' + phrasalVerbCntr + '. &nbsp; Phrasal Verb</font>');
+    var inpPhrasalVerb = divIndPhrasalVerb.find("#inpPhrasalVerb").first();
+    inpPhrasalVerb.prop("id", "inpPhrasalVerb_" + usageIndex+'-'+phrasalVerbCntr);
+    inpPhrasalVerb.data("index", usageIndex+'-'+phrasalVerbCntr);
+    
+    divIndPhrasalVerb
+        .hide()
+        .removeClass('hide')
+        .prop('id', 'divIndPhrasalVerb_' + usageIndex+'-'+phrasalVerbCntr)
+        .appendTo('#divContainerPhrasalVerbs_' + usageIndex)
+        .show('fast');
+};
+
+function removePhrasalVerb(buttonId) {
+    var divId = document.getElementById(buttonId).closest(".divClsIndPhrasalVerb").id;
+    $("#"+divId).hide('fast', function(){ $("#"+divId).remove(); });
+    phrasalVerbCntr--;
+}
+
+//------------------------- Compound Words -------------------------
+function addCompoundWordSection(usageIndex) {
+    compoundWordCntr++;
+    var divCompoundWords = $('#divCompoundWords').clone();
+    divCompoundWords.data("index", usageIndex);
+    
+    var divContainerCompoundWords = divCompoundWords.find("#divContainerCompoundWords").first();
+    divContainerCompoundWords.prop("id", "divContainerCompoundWords_" + usageIndex);
+    divContainerCompoundWords.data("index", usageIndex);
+
+    var divIndCompoundWord = $('#divIndCompoundWord').clone();
+    divIndCompoundWord.find('label').html('<font color="#feae3a">' + compoundWordCntr + '. &nbsp; Compound Word</font>');
+    var inpCompoundWord = divIndCompoundWord.find("#inpCompoundWord").first();
+    inpCompoundWord.prop("id", "inpCompoundWord_" + usageIndex+'-'+compoundWordCntr);
+    inpCompoundWord.data("index", usageIndex+'-'+compoundWordCntr);
+    
+    divCompoundWords
+        .hide()
+        .removeClass('hide')
+        .prop('id', 'divCompoundWords_' + usageIndex)
+        .appendTo('#divCompoundWordsPlaceholder_' + usageIndex);
+    divIndCompoundWord
+        .hide()
+        .removeClass('hide')
+        .prop('id', 'divIndCompoundWord_' + usageIndex+'-'+compoundWordCntr)
+        .appendTo('#divContainerCompoundWords_' + usageIndex);
+    divCompoundWords.show('fast');
+    divIndCompoundWord.show('fast');
+};
+
+function removeCompoundWordSection(usageIndex) {
+    // var divId = document.getElementById(buttonId).closest(".divClsUsge").find('.divClsPhrases').first().id;
+    $('#divCompoundWords_'+usageIndex).hide('fast', function(){ $('#divCompoundWords_'+usageIndex).remove(); });
+    compoundWordCntr = 0;
+}
+
+function addMoreCompoundWord(button) {
+    var usageIndex = $('#'+button.closest('.divClsCompoundWords').id).data("index");
+    console.log(usageIndex);
+    compoundWordCntr++;
+    var divIndCompoundWord = $('#divIndCompoundWord').clone();
+    divIndCompoundWord.find('label').html('<font color="#feae3a">' + compoundWordCntr + '. &nbsp; Compound Word</font>');
+    var inpCompoundWord = divIndCompoundWord.find("#inpCompoundWord").first();
+    inpCompoundWord.prop("id", "inpCompoundWord_" + usageIndex+'-'+compoundWordCntr);
+    inpCompoundWord.data("index", usageIndex+'-'+compoundWordCntr);
+    
+    divIndCompoundWord
+        .hide()
+        .removeClass('hide')
+        .prop('id', 'divIndCompoundWord_' + usageIndex+'-'+compoundWordCntr)
+        .appendTo('#divContainerCompoundWords_' + usageIndex)
+        .show('fast');
+};
+
+function removeCompoundWord(buttonId) {
+    var divId = document.getElementById(buttonId).closest(".divClsIndCompoundWord").id;
+    $("#"+divId).hide('fast', function(){ $("#"+divId).remove(); });
+    compoundWordCntr--;
+}
+
+//------------------------- Derivatives -------------------------
+function addDerivativeSection(usageIndex) {
+    derivativeCntr++;
+    var divDerivatives = $('#divDerivatives').clone();
+    divDerivatives.data("index", usageIndex);
+
+    var divContainerDerivatives = divDerivatives.find("#divContainerDerivatives").first();
+    divContainerDerivatives.prop("id", "divContainerDerivatives_" + usageIndex);
+    divContainerDerivatives.data("index", usageIndex);
+
+    var divIndDerivative = $('#divIndDerivative').clone();
+    divIndDerivative.find('label').html('<font color="#a638fc">' + derivativeCntr + '. &nbsp; Darivative</font>');
+    var inpDerivative = divIndDerivative.find("#inpDerivative").first();
+    inpDerivative.prop("id", "inpDerivative_" + usageIndex+'-'+derivativeCntr);
+    inpDerivative.data("index", usageIndex+'-'+derivativeCntr);
+
+    divDerivatives
+        .hide()
+        .removeClass('hide')
+        .prop('id', 'divDerivatives_' + usageIndex)
+        .appendTo('#divDerivativesPlaceholder_' + usageIndex);
+    divIndDerivative
+        .hide()
+        .removeClass('hide')
+        .prop('id', 'divIndDerivative_' + usageIndex+'-'+derivativeCntr)
+        .appendTo('#divContainerDerivatives_' + usageIndex);
+    divDerivatives.show('fast');
+    divIndDerivative.show('fast');
+};
+
+function removeDerivativeSection(usageIndex) {
+    // var divId = document.getElementById(buttonId).closest(".divClsUsge").find('.divClsPhrases').first().id;
+    $('#divDerivatives_'+usageIndex).hide('fast', function(){ $('#divDerivatives_'+usageIndex).remove(); });
+    derivativeCntr = 0;
+}
+
+function addMoreDerivative(button) {
+    var usageIndex = $('#'+button.closest('.divClsDerivatives').id).data("index");
+    console.log(usageIndex);
+    derivativeCntr++;
+    var divIndDerivative = $('#divIndDerivative').clone();
+    divIndDerivative.find('label').html('<font color="#a638fc">' + derivativeCntr + '. &nbsp; Darivative</font>');
+    var inpDerivative = divIndDerivative.find("#inpDerivative").first();
+    inpDerivative.prop("id", "inpDerivative_" + usageIndex+'-'+derivativeCntr);
+    inpDerivative.data("index", usageIndex+'-'+derivativeCntr);
+    
+    divIndDerivative
+        .hide()
+        .removeClass('hide')
+        .prop('id', 'divIndDerivative_' + usageIndex+'-'+derivativeCntr)
+        .appendTo('#divContainerDerivatives_' + usageIndex)
+        .show('fast');
+};
+
+function removeDerivative(buttonId) {
+    var divId = document.getElementById(buttonId).closest(".divClsIndDerivative").id;
+    $("#"+divId).hide('fast', function(){ $("#"+divId).remove(); });
+    derivativeCntr--;
+}
+
+//------------------------- Meaning -------------------------
+function addMeaning(button) {
     var clone = $('#divMeaning').clone();
     clone.find("#inpMeaning").first().prop("id", "inpMeaning_" + meaningCntr);
     clone.find("#inpExample").first().prop('id', 'inpExample_' + meaningCntr);
@@ -218,32 +410,22 @@ function addMeaning(buttonId) {
         .hide()
         .removeClass('hide')
         .attr('id', 'divMeaning_' + meaningCntr)
-        // .insertAfter("div."+rootDivId+":last");
         .insertBefore(button)
-        // .appendTo("#divMeaningContainer")
         .show('fast');
 
     meaningCntr++;
 };
 
 function removeMeaning(buttonId) {
-    // document.getElementById(objId).remove();
     var divId = document.getElementById(buttonId).closest(".divClsMeaning").id;
-    console.log(divId);
-    // document.getElementById(buttonId).closest(".divClsMeaning").remove();
     $("#"+divId).hide('fast', function(){ $("#"+divId).remove(); });
     meaningCntr--;
 };
 
+//------------------------- Sub-meaning -------------------------
 function addSubMeaning(buttonId) {
     var button = document.getElementById(buttonId);
     var rootDivId = button.closest('.divClsMeaning').id;
-
-    console.log(buttonId);
-    console.log(rootDivId);
-    // var obj = $('#divSubMeaning').find("#subMeaning").first().prop("id");
-    // console.log(obj);
-
     var clone = $('#divSubMeaning').clone();
     clone.find("#inpSubMeaning").first().prop("id", "inpSubMeaning_" + subMeaningCntr);
     clone.find("#inpExampleSubMeaning").first().prop('id', 'inpExampleSubMeaning_' + subMeaningCntr);
@@ -259,25 +441,16 @@ function addSubMeaning(buttonId) {
 };
 
 function removeSubMeaning(buttonId) {
-    // document.getElementById(objId).remove();
-    // document.getElementById(buttonId).closest(".divClsSubMeaning").remove();
     var divId = document.getElementById(buttonId).closest(".divClsSubMeaning").id;
-    // console.log(divId);
-    // document.getElementById(buttonId).closest(".divClsMeaning").remove();
     $("#"+divId).hide('fast', function(){ $("#"+divId).remove(); });
     subMeaningCntr--;
 };
 
-// $('#addMoreMeaning').click(function () {
-//     $(this).before($(".divMeaning").clone());
-// });
-
+//------------------------- Form Submission -------------------------
 $('#formAddNew').on('submit', function(e) {
     $("#submit").addClass("active");
     e.preventDefault();
     e.stopPropagation();
-    // Initiate Variables With Form Content
-
 
     var data = {};
     data.shopLocation = $("#shopLocation").val();
