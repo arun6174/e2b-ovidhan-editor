@@ -1,9 +1,11 @@
 var bnChCons = ['ক','খ','গ','ঘ','ঙ','চ','ছ','জ','ঝ','ঞ','ট','ঠ','ড','ঢ','ণ','ত','থ','দ','ধ','ন','প','ফ','ব','ভ','ম','য','র','ল','শ','ষ','স','হ','ড়','ঢ়','য়','ৎ'];
 var bnChVows = ['অ','আ','ই','ঈ','উ','ঊ','ঋ','এ','ঐ','ও','ঔ'];
 var bnNums = ['১','২','৩','৪','৫','৬','৭','৮','৯','১০','১১','১২','১৩','১৪','১৫','১৬','১৭','১৮','১৯','২০','২১','২২','২৩','২৪','২৫','২৬','২৭','২৮','২৯','৩০','৩১','৩২','৩৩','৩৪','৩৫','৩৬','৩৭','৩৮','৩৯','৪০','৪১','৪২','৪৩','৪৪','৪৫','৪৬','৪৭','৪৮','৪৯','৫০'];
-var meaningCntr = 1;
-var subMeaningCntr = 1;
-var posCntr = 1;
+var usageCntr = 0;
+var meaningCntr = 0;
+var subMeaningCntr = 0;
+var posCntr = 0;
+var phraseCntr = 0;
 
 
 $( document ).ready(function() {
@@ -30,8 +32,28 @@ $(function () {
     $(".chkClsButtonGrp").change(function() {
         if (this.checked) {
             this.closest('.btnClsCheckbox').style.backgroundColor = '#f0ad4e';//'#5cb85c';
+            $(this).siblings('i').first().removeClass('fa-plus').addClass('fa-times-circle');
+            if (this.name == 'phrases') {
+                addPhraseSection(this.id);
+            } else if (this.name == 'phrasalVerbs') {
+                addPhrasalVerbSection(this.id);
+            } else if (this.name == 'compoundWords') {
+                addCompoundWordSection(this.id);
+            } else {
+                addDerivativeSection(this.id);
+            }
         } else {
             this.closest('.btnClsCheckbox').style.backgroundColor = '';
+            $(this).siblings('i').first().removeClass('fa-times-circle').addClass('fa-plus');
+            if (this.name == 'phrases') {
+                removePhraseSection(this.id);
+            } else if (this.name == 'phrasalVerbs') {
+                removePhrasalVerbSection(this.id);
+            } else if (this.name == 'compoundWords') {
+                removeCompoundWordSection(this.id);
+            } else {
+                removeDerivativeSection(this.id);
+            }
         }
     });
 
@@ -128,12 +150,60 @@ function addUsage(buttonId) {
 
 };
 
+function addPhraseSection(buttonId) {
+    var parentDivUsageId = document.getElementById(buttonId).closest('.divClsUsage').id;
+    // console.log(parentDivUsageId);
+    // console.log($('#'+parentDivUsageId).data('index'));
+    
+    // var divTargetId = $('#'+button.closest('.divClsUsage').id).find('#divPhrasesPlaceholder');
+    // console.log(buttonId);
+    // console.log(divTargetId);
+    // phraseCntr++;
+    // var divPhrases = $('#divPhrases').clone();
+    // divPhrases.find("#divContainerPhrases").first().prop("id", "divContainerPhrases_" + usageCntr);
 
+    // var divIndivPhrase = $('#divPhrase').clone();
+    // divIndivPhrase.find('label').text(phraseCntr + ' &nbsp; Phrase');
+    // divIndivPhrase.find("#inpPhrase").first().prop("id", "inpPhrase_" + phraseCntr);
+    
+    // divIndivPhrase
+    //     .hide()
+    //     .removeClass('hide')
+    //     .attr('id', '#divPhrase_' + phraseCntr)
+    //     .appendTo('divContainerPhrases_' + usageCntr);
 
-// $('.selectpicker').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
-//     var selected = $(e.currentTarget).val();
-//     console.log(selected);
-// });
+    // divPhrases
+    //     .hide()
+    //     .removeClass('hide')
+    //     .attr('id', '#divPhrase_' + usageCntr)
+    //     .appendTo('#divPhrasesPlaceholder_'+usageCntr)
+    //     show('fast');
+};
+
+function removePhraseSection(buttonId) {
+    var divId = document.getElementById(buttonId).closest(".divClsUsge").find('.divClsPhrases').first().id;
+    $("#"+divId).hide('fast', function(){ $("#"+divId).remove(); });
+    phraseCntr = 0;
+}
+
+function addMorePhrase(buttonId) {
+    phraseCntr++;
+    var divIndivPhrase = $('#divPhrase').clone();
+    divIndivPhrase.find('label').text(phraseCntr + ' &nbsp; Phrase');
+    divIndivPhrase.find("#inpPhrase").first().prop("id", "inpPhrase_" + phraseCntr);
+    
+    divIndivPhrase
+        .hide()
+        .removeClass('hide')
+        .attr('id', '#divPhrase_' + phraseCntr)
+        .appendTo('divContainerPhrases_' + usageCntr);
+};
+
+function removePhrase(buttonId) {
+    var divId = document.getElementById(buttonId).closest(".divClsPhrase").id;
+    $("#"+divId).hide('fast', function(){ $("#"+divId).remove(); });
+    phraseCntr = 0;
+}
 
 function addMeaning(buttonId) {
     var button = document.getElementById(buttonId);

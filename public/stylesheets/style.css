@@ -135,7 +135,7 @@ hr {
   -moz-border-left-colors: none;
   -moz-border-right-colors: none;
   -moz-border-top-colors: none;
-  border-color: #DDDDDD;
+  border-color: rgb(255, 177, 76);
   border-style: solid none;
   border-width: 1px 0;
   margin: 12px 0;
@@ -150,7 +150,7 @@ hr.dashed {
   border-color: #DDDDDD;
   border-style: dashed none;
   border-width: 1px 0;
-  margin-left: 3%;
+  margin-left: 2%;
   margin-top: 2em;
   margin-bottom: 1em;
   width: 97%;
@@ -225,9 +225,55 @@ fieldset[disabled] .btn-purple.active {
   border-color: #130269; 
 } 
  
-.btn-purple .badge { 
-  color: #611BBD; 
-  background-color: #ffffff; 
+.btn-purple .badge {
+  color: #611BBD;
+  background-color: #ffffff;
+}
+
+.btn-cgreen {
+  color: #FFFFFF;
+  background-color: #00CC99;
+  border-color: #29BA96;
+} 
+ 
+.btn-cgreen:hover, 
+.btn-cgreen:focus, 
+.btn-cgreen:active, 
+.btn-cgreen.active, 
+.open .dropdown-toggle.btn-cgreen { 
+  color: #FFFFFF;
+  background-color: #247A73;
+  border-color: #29BA96;
+} 
+ 
+.btn-cgreen:active, 
+.btn-cgreen.active, 
+.open .dropdown-toggle.btn-cgreen { 
+  background-image: none;
+} 
+ 
+.btn-cgreen.disabled,
+.btn-cgreen[disabled],
+fieldset[disabled] .btn-cgreen,
+.btn-cgreen.disabled:hover,
+.btn-cgreen[disabled]:hover,
+fieldset[disabled] .btn-cgreen:hover,
+.btn-cgreen.disabled:focus,
+.btn-cgreen[disabled]:focus,
+fieldset[disabled] .btn-cgreen:focus,
+.btn-cgreen.disabled:active,
+.btn-cgreen[disabled]:active,
+fieldset[disabled] .btn-cgreen:active,
+.btn-cgreen.disabled.active,
+.btn-cgreen[disabled].active,
+fieldset[disabled] .btn-cgreen.active {
+  background-color: #00CC99;
+  border-color: #29BA96;
+} 
+ 
+.btn-cgreen .badge {
+  color: #00CC99;
+  background-color: #FFFFFF;
 }
 
 /*.form-inline {*/
