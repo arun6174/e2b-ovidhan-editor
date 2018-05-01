@@ -154,6 +154,7 @@ hr.dashed {
   margin-top: 2em;
   margin-bottom: 1em;
   width: 97%;
+  overflow: auto;
 }
 
 hr.last {
@@ -274,6 +275,23 @@ fieldset[disabled] .btn-cgreen.active {
 .btn-cgreen .badge {
   color: #00CC99;
   background-color: #FFFFFF;
+}
+
+/* .verticalLine {
+  border-left: thick solid #ff0000;
+} */
+
+hr.vert{
+  background: rgb(172, 14, 9);
+  /* color: #000; */
+  display: inline-block;
+  height: 44px;
+  width: 2px;
+  vertical-align: middle;
+  border-style: solid none;
+  /* margin-bottom: 50px; */
+  padding: 0;
+  margin: 0;
 }
 
 /*.form-inline {*/
