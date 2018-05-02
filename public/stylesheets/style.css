@@ -98,6 +98,7 @@ a {
   padding: 20px;
   padding-left: 50px;
   padding-right: 50px;
+  min-height: 390px;
 }
 
 .card {
@@ -106,7 +107,7 @@ a {
   margin-bottom: 25px;
   margin: 0 auto;
   max-width: 90%;
-  min-height: 550px;
+  min-height: 400px;
 }
 
 input[type="text"] {

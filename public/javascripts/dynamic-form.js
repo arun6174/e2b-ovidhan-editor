@@ -289,9 +289,9 @@ function addPartOfSpeech(buttonId) {
 function removePartOfSpeech(button) {
     var btnDataIndex = $('#'+button.id).data('index');
     var usageSectionCode = 'pos';
-    // var  btnDataIndex.split('-');
-    var usageIndex = parseInt(btnDataIndex.charAt(0)); //ToDo: fix to get 1+ digit usage index
-    var itemIndex = parseInt(btnDataIndex.charAt(2)); //ToDo: fix to get 1+ digit item index
+    var diParts = btnDataIndex.split('-');
+    var usageIndex = parseInt(diParts[0]);
+    var itemIndex = parseInt(diParts[1]);
 
     // Update dict - 1)remove meaning, 2)update deleted indices
     // Don't decrease meaningCntr, since that would create duplicate indices after new addition
@@ -299,10 +299,7 @@ function removePartOfSpeech(button) {
     dict[usageIndex].sections[usageSectionCode].deletedItemIndices.push(itemIndex);
 
     // Remove element from DOM
-    var  divId = '#divPartOfSpeech_' + btnDataIndex;
-    var divId = button.closest('.divClsPartOfSpeech').id;
-    $('#'+divId).hide('fast', function(){ this.remove(); });
-    // posCntr--;
+    $('#divPartOfSpeech_'+btnDataIndex).hide('fast', function(){ this.remove(); });
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~ Phrases -~-~-~-~-~-~-~-~-~-~-~-~
@@ -318,7 +315,7 @@ function addPhraseSection(usageIndex) {
         };
     }
     var phraseCntr = ++(dict[usageIndex].sections[usageSectionCode].itemCntr);
-    console.log(phraseCntr);
+    // console.log(phraseCntr);
     dict[usageIndex].sections[usageSectionCode].items[phraseCntr] = {
         phrase: '',
         meaningCntr: 0,
@@ -405,8 +402,9 @@ function addMorePhrase(button) {
 function removePhrase(buttonId) {
     var btnDataIndex = $('#'+buttonId).data('index');
     var usageSectionCode = 'phr';
-    var usageIndex = parseInt(btnDataIndex.charAt(0)); //ToDo: fix to get 1+ digit usage index
-    var itemIndex = parseInt(btnDataIndex.charAt(2)); //ToDo: fix to get 1+ digit item index
+    var diParts = btnDataIndex.split('-');
+    var usageIndex = parseInt(diParts[0]);
+    var itemIndex = parseInt(diParts[1]);
     
     // Update dict
     dict[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
@@ -517,8 +515,9 @@ function addMorePhrasalVerb(button) {
 function removePhrasalVerb(buttonId) {
     var btnDataIndex = $('#'+buttonId).data('index');
     var usageSectionCode = 'phv';
-    var usageIndex = parseInt(btnDataIndex.charAt(0)); //ToDo: fix to get 1+ digit usage index
-    var itemIndex = parseInt(btnDataIndex.charAt(2)); //ToDo: fix to get 1+ digit item index
+    var diParts = btnDataIndex.split('-');
+    var usageIndex = parseInt(diParts[0]);
+    var itemIndex = parseInt(diParts[1]);
     
     // Update dict
     dict[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
@@ -642,8 +641,9 @@ function removeCompoundWord(buttonId) {
     // compoundWordCntr--;
     var btnDataIndex = $('#'+buttonId).data('index');
     var usageSectionCode = 'cpw';
-    var usageIndex = parseInt(btnDataIndex.charAt(0)); //ToDo: fix to get 1+ digit usage index
-    var itemIndex = parseInt(btnDataIndex.charAt(2)); //ToDo: fix to get 1+ digit item index
+    var diParts = btnDataIndex.split('-');
+    var usageIndex = parseInt(diParts[0]);
+    var itemIndex = parseInt(diParts[1]);
     
     // Update dict
     dict[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
@@ -763,8 +763,9 @@ function addMoreDerivative(button) {
 function removeDerivative(buttonId) {
     var btnDataIndex = $('#'+buttonId).data('index');
     var usageSectionCode = 'drv';
-    var usageIndex = parseInt(btnDataIndex.charAt(0)); //ToDo: fix to get 1+ digit usage index
-    var itemIndex = parseInt(btnDataIndex.charAt(2)); //ToDo: fix to get 1+ digit item index
+    var diParts = btnDataIndex.split('-');
+    var usageIndex = parseInt(diParts[0]);
+    var itemIndex = parseInt(diParts[1]);
     
     // Update dict
     dict[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
@@ -778,8 +779,9 @@ function removeDerivative(buttonId) {
 function addMeaning(button) {
     var btnDataIndex = $('#'+button.id).data('index');
     var usageSectionCode = btnDataIndex.substring(0,3);
-    var usageIndex = parseInt(btnDataIndex.charAt(4)); //ToDo: fix to get 1+ digit usage index
-    var itemIndex = parseInt(btnDataIndex.charAt(6)); //ToDo: fix to get 1+ digit item index
+    var diParts = btnDataIndex.substring(4).split('-');
+    var usageIndex = parseInt(diParts[0]);
+    var itemIndex = parseInt(diParts[1]);
     var meaningCntr = ++(dict[usageIndex].sections[usageSectionCode].items[itemIndex].meaningCntr);
     var elemIndex = usageSectionCode + '_' + usageIndex + '-' + itemIndex + '-' + meaningCntr;
 
@@ -813,9 +815,10 @@ function addMeaning(button) {
 function removeMeaning(button) {
     var btnDataIndex = $('#'+button.id).data('index');
     var usageSectionCode = btnDataIndex.substring(0, 3);
-    var usageIndex = parseInt(btnDataIndex.charAt(4)); //ToDo: fix to get 1+ digit usage index
-    var itemIndex = parseInt(btnDataIndex.charAt(6)); //ToDo: fix to get 1+ digit item index
-    var meaningIndex = parseInt(btnDataIndex.charAt(8)); //ToDo: fix to get 1+ digit item index
+    var diParts = btnDataIndex.substring(4).split('-');
+    var usageIndex = parseInt(diParts[0]);
+    var itemIndex = parseInt(diParts[1]);
+    var meaningIndex = parseInt(diParts[2]);
 
     // Update dict - 1)remove meaning, 2)update deleted indices
     // Don't decrease meaningCntr, since that would create duplicate indices after new addition
@@ -823,19 +826,17 @@ function removeMeaning(button) {
     dict[usageIndex].sections[usageSectionCode].items[itemIndex].deletedMeaningIndices.push(meaningIndex);
 
     // Remove element from DOM
-    var  divId = '#divMeaning_' + btnDataIndex;
-    // var  divId = document.getElementById(button.id).closest('.divClsMeaning').id;
-    $(divId).hide('fast', function(){ this.remove(); });
-    // meaningCntr--;
+    $('#divMeaning_'+btnDataIndex).hide('fast', function(){ this.remove(); });
 };
 
 //-~-~-~-~-~-~-~-~-~-~-~-~ Sub-meaning -~-~-~-~-~-~-~-~-~-~-~-~
 function addSubMeaning(button) {
     var btnDataIndex = $('#'+button.id).data('index');
     var usageSectionCode = btnDataIndex.substring(0, 3);
-    var usageIndex = parseInt(btnDataIndex.charAt(4)); //ToDo: fix to get 1+ digit usage index
-    var itemIndex = parseInt(btnDataIndex.charAt(6)); //ToDo: fix to get 1+ digit item index
-    var meaningIndex = parseInt(btnDataIndex.charAt(8)); //ToDo: fix to get 1+ digit item index
+    var diParts = btnDataIndex.substring(4).split('-');
+    var usageIndex = parseInt(diParts[0]);
+    var itemIndex = parseInt(diParts[1]);
+    var meaningIndex = parseInt(diParts[2]);
     var subMeaningCntr = ++(dict[usageIndex].sections[usageSectionCode].items[itemIndex].meaning[meaningIndex].subMeaningCntr);
     var elemIndex = usageSectionCode + '_' + usageIndex + '-' + itemIndex + '-' + meaningIndex + '-' + subMeaningCntr;
 
@@ -867,20 +868,18 @@ function addSubMeaning(button) {
 function removeSubMeaning(button) {
     var btnDataIndex = $('#'+button.id).data('index');
     var usageSectionCode = btnDataIndex.substring(0, 3);
-    var usageIndex = parseInt(btnDataIndex.charAt(4)); //ToDo: fix to get 1+ digit usage index
-    var itemIndex = parseInt(btnDataIndex.charAt(6)); //ToDo: fix to get 1+ digit item index
-    var meaningIndex = parseInt(btnDataIndex.charAt(8)); //ToDo: fix to get 1+ digit item index
-    var subMeaningIndex = parseInt(btnDataIndex.charAt(10)); //ToDo: fix to get 1+ digit item index
+    var diParts = btnDataIndex.substring(4).split('-');
+    var usageIndex = parseInt(diParts[0]);
+    var itemIndex = parseInt(diParts[1]);
+    var meaningIndex = parseInt(diParts[2]);
+    var subMeaningIndex = parseInt(diParts[3]);
 
     // Update dict - 1)remove sub-meaning, 2)update deleted indices
     // Don't decrease subMeaningCntr, since that would create duplicate indices after new addition
     dict[usageIndex].sections[usageSectionCode].items[itemIndex].meaning[meaningIndex].subMeaning[subMeaningIndex] = {};
     dict[usageIndex].sections[usageSectionCode].items[itemIndex].meaning[meaningIndex].deletedSubMeaningIndices.push(subMeaningIndex);
 
-    var  divId = '#divSubMeaning_' + btnDataIndex;
-    // var divId = document.getElementById(buttonId).closest('.divClsSubMeaning').id;
-    $(divId).hide('fast', function(){ this.remove(); });
-    // subMeaningCntr--;
+    $('#divSubMeaning_'+btnDataIndex).hide('fast', function(){ this.remove(); });
 };
 
 
@@ -1021,8 +1020,8 @@ $(function () {
     $('#formAddNew').on('submit', function(e) {
         e.preventDefault();
         e.stopPropagation();
-        // console.log('ABC');
-        // return;
+        console.log(dict);
+        return;
         $('#submit').addClass('active');
         
 

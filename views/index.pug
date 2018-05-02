@@ -18,7 +18,7 @@ block content
       // Tab panes
       .tab-content
         #addnew.tab-pane.active(role='tabpanel')
-          form.form-horizontal#formAddNew(style='align:left')
+          form.form-horizontal#formAddNew(style='align:left;')
             div.container
               .row.col-xs-10
                 .form-group.col-xs-2
@@ -92,7 +92,7 @@ block content
             //-         i.fa.fa-plus
             //-           | &nbsp; Derivatives
 
-            div#divFooter(style='margin-top:100px;overflow:auto')
+            div#divFooter(style='margin-top:60px;overflow:auto;')
               div.col-12
                 button.btn.btn-primary.btn-lg.btn-purple.btnClsAddUsage(type="button", style='border-radius:2px;float:left;margin:10px 0px 10px 0px;')
                   i.fa.fa-plus
@@ -104,6 +104,8 @@ block content
 
         #search-edit.tab-pane(role='tabpanel')
           div.col-12(style='text-align:center;')
+            //- h4 Work in progress...
+            img(src='/images/work-in-progress.gif', alt='Work in progress', style='width:50%;height:50%;')
             h4 Work in progress...
 
   // Template for Usage
