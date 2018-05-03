@@ -24,13 +24,13 @@ block content
                 .form-group.col-xs-2
                   label(for='mainword') Main Word
                   br
-                  input#mainword.form-control(type="text", name="mainword")
+                  input#mainWord.form-control(type="text", name="mainWord", onfocusout='dataElemOnFocusOut(this)')
                 .form-group.col-xs-1
                   label
                 .form-group.col-xs-3
                   label(for='altspelling') Alternate Spelling(s)
                   br
-                  input#altspelling.form-control(type="text", name="altspelling")
+                  input#altSpelling.form-control(type="text", name="altSpelling", onfocusout='dataElemOnFocusOut(this)')
                 div.col-sm-5(style='float:right;padding:0em 0em 0em 3.6em;')
                   button.btn.btn-primary.btn-lg.btn-purple.btnClsAddUsage(type="button", style='border-radius:2px;vertical-align:top;')
                     i.fa.fa-plus
@@ -181,7 +181,7 @@ block content
           | &nbsp; অর্থ
 
   //--%--%--%--%-- Template for PoS selectpicker --%--%--%--%--
-  select.clsSelectPos.form-control.hide#selectPoS_x-x(name='selectPos', data-index='x-x', data-style='btn-default', title='Select one', data-width='auto', onchange='fnPosOnChange(this.id)')
+  select.clsSelectPos.form-control.hide#selectPoS_x-x(name='pos', data-index='x-x', data-usage-section-code='pos', data-style='btn-default', title='Select one', data-width='auto', onchange='fnPosOnChange(this.id)', onfocusout='dataElemOnFocusOut(this)')
     option.selected.hidden Choose one
     option(value='noun') Noun
     option(value='pron') Pronoun
@@ -195,47 +195,47 @@ block content
   //--~--~--~--~ Template for Noun details --~--~--~--~
   div.form-group.form-inline.divClsNoun.hide#divNoun_x-x(data-index='x-x')
     label(for='plural', style='padding-left:3em') Plural
-    input.form-control.inpClsPlural#inpPlural_x-x(type="text", name='plural')
+    input.form-control.inpClsPlural#inpPlural_x-x(data-index='x-x', data-usage-section-code='pos', data-path-prefix='posDetails', type="text", name='plural', onfocusout='dataElemOnFocusOut(this)')
     label(style='padding-left:4em') Types
   
   //--#--#--#--# Template for Noun Type selectpicker --#--#--#--#
-  select.selectpicker.clsSelectNounType.form-control.hide#selectNounType_x-x(data-index='x-x', name='selectNounType', data-style='btn-default', title='Select one/more', data-width='fit', multiple='', data-max-options='2')
-    option(value='cm-noun') Common noun
-    option(value='pr-noun') Proper noun
-    option(value='abs-noun') Abstract noun
-    option(value='col-noun') Collective noun
-    option(value='count-noun') Countable
-    option(value='uncount-noun') Uncountable
+  select.selectpicker.clsSelectNounType.form-control.hide#selectNounType_x-x(data-index='x-x', data-usage-section-code='pos', data-path-prefix='posDetails', name='nounTypes', data-style='btn-default', title='Select one/more', data-width='fit', multiple='', data-max-options='2', onfocusout='dataElemOnFocusOut(this)')
+    option(value='common') Common noun
+    option(value='proper') Proper noun
+    option(value='abstract') Abstract noun
+    option(value='collective') Collective noun
+    option(value='countable') Countable
+    option(value='uncountable') Uncountable
 
   //-^-^-^-^-^ Template for Verb details -^-^-^-^-^
-  div.form-group.form-inline.divClsVerb.hide#divVerb_x-x(data-index='x-x')
+  div.form-group.form-inline.divClsVerb.hide#divVerb_x-x(data-index='x-x', data-usage-section-code='pos')
     div(style='float:left;')
       label(style='padding-left:3em') Different forms:
       .x
         div
           label(style='padding-left:5em') 3rd person
         div
-          input.form-control.inpCls3rdPerson#inp3rdPerson_x-x(type="text", name='3rdPerson', style='margin-left:1em')
+          input.form-control.inpCls3rdPerson#inp3rdPerson_x-x(data-index='x-x', data-usage-section-code='pos', data-path-prefix='posDetails/verbForms', type="text", name='thirdPerson', style='margin-left:1em', onfocusout='dataElemOnFocusOut(this)')
       .x
         div
           label(style='padding-left:5em') Present cont.
         div
-          input.form-control.inpClsPresentCont#inpPresentCont_x-x(data-index='x-x', type="text", name='presentCont', style='margin-left:1em')
+          input.form-control.inpClsPresentCont#inpPresentCont_x-x(data-index='x-x', data-usage-section-code='pos', data-path-prefix='posDetails/verbForms', type="text", name='presentCont', style='margin-left:1em', onfocusout='dataElemOnFocusOut(this)')
       .x
         div
           label(style='padding-left:5em') Past
         div
-          input.form-control.inpClsPast#inpPast_x-x(data-index='x-x', type="text", name='Past', style='margin-left:1em')
+          input.form-control.inpClsPast#inpPast_x-x(data-index='x-x', data-usage-section-code='pos', data-path-prefix='posDetails/verbForms', type="text", name='past', style='margin-left:1em', onfocusout='dataElemOnFocusOut(this)')
       .x
         div
           label(style='padding-left:5em') Past part.
         div
-          input.form-control.inpClsPastPart#inpPastPart_x-x(data-index='x-x', type="text", name='pastPart', style='margin-left:1em')
+          input.form-control.inpClsPastPart#inpPastPart_x-x(data-index='x-x', data-usage-section-code='pos', data-path-prefix='posDetails/verbForms', type="text", name='pastPart', style='margin-left:1em', onfocusout='dataElemOnFocusOut(this)')
     div.divClsType(style='float:left;')
-      label(style='padding:7px 0px 0px 15px') Types &emsp;
+      label(style='padding:7px 0px 0px 15px') Type &ensp;
   
-  //-*-*-*-*-* Template for Verb Type selectpicker -*-*-*-*-*
-  select.selectpicker.clsSelectVerbType.hide.form-control#selectVerbType_x-x(data-index='x-x', name='selectVerbType', data-style='btn-default', title='Select one', data-width='fit')
+  //-*-*-*-*-* Template for Verb Type select -*-*-*-*-*
+  select.clsSelectVerbType.hide.form-control#selectVerbType_x-x(data-index='x-x', data-usage-section-code='pos', data-path-prefix='posDetails/verbType', name='verbType', data-style='btn-default', title='Select one', data-width='fit', onfocusout='dataElemOnFocusOut(this)')
     option(value='trans-verb') Transitive
     option(value='intrans-verb') Intransitive
     option(value='verb-both') Both
@@ -248,12 +248,12 @@ block content
         div
           label(style='padding-left:5em') Comparative
         div
-          input.form-control.inpClsComparative#inpComparative_x-x(data-index='x-x', type="text", name='comparativeForm', style='margin-left:1em')
+          input.form-control.inpClsComparative#inpComparative_x-x(data-index='x-x', data-usage-section-code='pos', data-path-prefix='posDetails/adjForms', type="text", name='comparative', style='margin-left:1em', onfocusout='dataElemOnFocusOut(this)')
       .x
         div
           label(style='padding-left:5em') Superlative
         div
-          input.form-control.inpClsSuperlative#inpSuperlative_x-x(data-index='x-x', type="text", name='superlativeForm', style='margin-left:1em')
+          input.form-control.inpClsSuperlative#inpSuperlative_x-x(data-index='x-x', data-usage-section-code='pos', data-path-prefix='posDetails/adjForms', type="text", name='superlative', style='margin-left:1em', onfocusout='dataElemOnFocusOut(this)')
 
   //-~-~-~-~-~-~ Template for Meaning with option to add Sub-meaning -~-~-~-~-~-~
   //- data-index format: <aaa_x-x-x>
@@ -267,12 +267,12 @@ block content
           //- | &ensp; অর্থ
         label(style='margin-left:0.6em;') অর্থ (N)
       div
-        input.form-control.inpClsMeaning#inpMeaning_aaa_x-x-x(data-index='aaa_x-x-x', type='text', name='meaning', style='width: 35em; margin:0em 0em 0em 1.2em')
+        input.form-control.inpClsMeaning#inpMeaning_aaa_x-x-x(data-index='aaa_x-x-x', type='text', name='meaning', style='width: 35em; margin:0em 0em 0em 1.2em', onfocusout='dataElemOnFocusOut(this)')
     .x
       div
         label(style='margin-left:4em') উদাহরণ
       div
-        input.form-control.inpClsExample#inpExample_aaa_x-x-x(data-index='aaa_x-x-x', type='text', name='example', style='width:35em; margin:0em 0em 0em 1.2em')
+        input.form-control.inpClsExample#inpExample_aaa_x-x-x(data-index='aaa_x-x-x', type='text', name='example', style='width:35em; margin:0em 0em 0em 1.2em', onfocusout='dataElemOnFocusOut(this)')
         button.btn.btn-default.btnClsAddSubMeaning#btnAddSubMeaning_aaa_x-x-x(type='button', style='margin-left:2em; padding:4px 8px 4px 8px', onclick='addSubMeaning(this)')
           i.fa.fa-plus
           | &nbsp; অর্থান্তর
@@ -286,12 +286,12 @@ block content
       div
         label(style='padding-left:4em; margin-top:10px') অর্থান্তর (N-a)
       div
-        input.input1.form-control.inpClsSubMeaning#inpSubMeaning_aaa_x-x-x-x(data-index='aaa_x-x-x-x', type='text', name='subMeaning', style='width:35em; margin:0em 0em 0em 1.2em')
+        input.input1.form-control.inpClsSubMeaning#inpSubMeaning_aaa_x-x-x-x(data-index='aaa_x-x-x-x', type='text', name='subMeaning', style='width:35em; margin:0em 0em 0em 1.2em', onfocusout='dataElemOnFocusOut(this)')
     .x
       div
         label(style='padding-left:5.5em') উদাহরণ
       div
-        input.input2.form-control.inpClsExampleSubMeaning#inpExampleSubMeaning_aaa_x-x-x-x(type='text', name='exampleSubMeaning', style='width:35em; margin:0em 0em 0em 1.2em')
+        input.input2.form-control.inpClsExampleSubMeaning#inpExampleSubMeaning_aaa_x-x-x-x(type='text', name='exampleSubMeaning', style='width:35em; margin:0em 0em 0em 1.2em', onfocusout='dataElemOnFocusOut(this)')
         button.btn.btn-default#btnRemoveSubMeaning_aaa_x-x-x-x(type='button', style='margin-left:2em; padding:4px 8px 4px 8px', onclick='removeSubMeaning(this)')
           i.fa.fa-minus
           | &ensp; অর্থান্তর
@@ -318,7 +318,7 @@ block content
       div
         label X. &nbsp; Phrase
       div
-        input.form-control.inpClsPhrase#inpPhrase_x-x(data-index='x-x',type="text", name='phrase', style='width:35em;margin:0em 0em 0em 1em')
+        input.form-control.inpClsPhrase#inpPhrase_x-x(data-index='x-x', data-usage-section-code='phr', type="text", name='phrase', style='width:35em;margin:0em 0em 0em 1em', onfocusout='dataElemOnFocusOut(this)')
     br
     div.col.xs-2.divClsMeaningSection#divMeaningSection_phr_x-x(data-index='x-x')
       button.btn.btn-default.btnClsAddMeaning#btnAddMeaning_phr_x-x(type='button', style='margin:0px 0px 0px 30px; padding:4px 8px 4px 8px;', onclick='addMeaning(this)')
@@ -347,7 +347,7 @@ block content
       div
         label X. &nbsp; Phrasal Verb
       div
-        input.form-control.inpClsPhrasalVerb#inpPhrasalVerb_x-x(data-index='x-x',type="text", name='phrasalVerb', style='width:35em;margin:0em 0em 0em 1em')
+        input.form-control.inpClsPhrasalVerb#inpPhrasalVerb_x-x(data-index='x-x', data-usage-section-code='phv', type="text", name='phrasalVerb', style='width:35em;margin:0em 0em 0em 1em', onfocusout='dataElemOnFocusOut(this)')
     br
     div.col.xs-2.divClsMeaningSection#divMeaningSection_phv_x-x(data-index='x-x')
       button.btn.btn-default.btnClsAddMeaning#btnAddMeaning_phv_x-x(type='button', style='margin:0px 0px 0px 30px; padding:4px 8px 4px 8px;', onclick='addMeaning(this)')
@@ -376,7 +376,7 @@ block content
       div
         label X. &nbsp; Compound Word
       div
-        input.form-control.inpClsCompoundWord#inpCompoundWord_x-x(data-index='x-x',type="text", name='compoundWord', style='width:35em;margin:0em 0em 0em 1em')
+        input.form-control.inpClsCompoundWord#inpCompoundWord_x-x(data-index='x-x', data-usage-section-code='cpw', type="text", name='compoundWord', style='width:35em;margin:0em 0em 0em 1em', onfocusout='dataElemOnFocusOut(this)')
     br
     div.col.xs-2.divClsMeaningSection#divMeaningSection_cpw_x-x(data-index='x-x')
       button.btn.btn-default.btnClsAddMeaning#btnAddMeaning_cpw_x-x(type='button', style='margin:0px 0px 0px 30px; padding:4px 8px 4px 8px;', onclick='addMeaning(this)')
@@ -405,7 +405,7 @@ block content
       div
         label X. &nbsp; Derivative
       div
-        input.form-control.inpClsDerivative#inpDerivative_x-x(data-index='x-x',type="text", name='derivative', style='width:35em;margin:0em 0em 0em 1em')
+        input.form-control.inpClsDerivative#inpDerivative_x-x(data-index='x-x', data-usage-section-code='drv', type="text", name='derivative', style='width:35em;margin:0em 0em 0em 1em', onfocusout='dataElemOnFocusOut(this)')
     br
     div.col.xs-2.divClsMeaningSection#divMeaningSection_drv_x-x(data-index='x-x')
       button.btn.btn-default.btnClsAddMeaning#btnAddMeaning_drv_x-x(type='button', style='margin:0px 0px 0px 30px; padding:4px 8px 4px 8px;', onclick='addMeaning(this)')
