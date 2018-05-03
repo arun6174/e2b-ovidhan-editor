@@ -38,9 +38,12 @@ $(document).ready(function() {
 
 function fnPosOnChange(selectId) {
     var e = document.getElementById(selectId);
-    // var selectDataIndex = $('#'+selectId).data('index');
     var elemIndex = e.dataset.index;
     var divPosDetailId = '#divPosDetails_' + elemIndex;
+    var diParts = elemIndex.split('-');
+    var usageIndex = parseInt(diParts[0]);
+    var itemIndex = parseInt(diParts[1]);
+    var usageSectionCode = 'pos';
     // console.log(divPosDetailId);
     // return;
 
@@ -69,6 +72,11 @@ function fnPosOnChange(selectId) {
                 .show('fast');
             newSP.appendTo('#divNoun_' + elemIndex);
             newSP.selectpicker('refresh');
+
+            dict[usageIndex].sections[usageSectionCode].items[itemIndex].posDetails = {
+                plural: '',
+                nounTypes: []
+            };
         }
     } else if (e.options[e.selectedIndex].value == 'verb') {
         if ($('#divNoun_'+elemIndex).length > 0) {
@@ -100,6 +108,16 @@ function fnPosOnChange(selectId) {
                 .show('fast');
             newSP.appendTo('#divVerb_' + elemIndex);
             newSP.selectpicker('refresh');
+
+            dict[usageIndex].sections[usageSectionCode].items[itemIndex].posDetails = {
+                verbTypes: [],
+                forms: {
+                    thirdPerson: '',
+                    presentCont: '',
+                    past: '',
+                    pastPart: ''
+                }
+            };
         }
     } else if (e.options[e.selectedIndex].value == 'adj') {
         if ($('#divNoun_'+elemIndex).length > 0) {
@@ -120,6 +138,13 @@ function fnPosOnChange(selectId) {
                 .removeClass('hide')
                 .appendTo(divPosDetailId)
                 .show('fast');
+            
+            dict[usageIndex].sections[usageSectionCode].items[itemIndex].posDetails = {
+                forms: {
+                    comparative: '',
+                    superlative: ''
+                }
+            };
         }
     } else {
         if ($('#divNoun_'+elemIndex).length > 0) {
@@ -129,6 +154,7 @@ function fnPosOnChange(selectId) {
         } else if ($('#divAdj_'+elemIndex).length > 0) {
             $('#divAdj_'+elemIndex).hide('fast', function(){ this.remove(); });
         }
+        dict[usageIndex].sections[usageSectionCode].items[itemIndex].posDetails = {};
     }    
 }
 
