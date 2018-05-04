@@ -1,46 +1,23 @@
 var bnChCons = ['ক','খ','গ','ঘ','ঙ','চ','ছ','জ','ঝ','ঞ','ট','ঠ','ড','ঢ','ণ','ত','থ','দ','ধ','ন','প','ফ','ব','ভ','ম','য','র','ল','শ','ষ','স','হ','ড়','ঢ়','য়','ৎ'];
 var bnChVows = ['অ','আ','ই','ঈ','উ','ঊ','ঋ','এ','ঐ','ও','ঔ'];
 var bnNums = ['১','২','৩','৪','৫','৬','৭','৮','৯','১০','১১','১২','১৩','১৪','১৫','১৬','১৭','১৮','১৯','২০','২১','২২','২৩','২৪','২৫','২৬','২৭','২৮','২৯','৩০','৩১','৩২','৩৩','৩৪','৩৫','৩৬','৩৭','৩৮','৩৯','৪০','৪১','৪২','৪৩','৪৪','৪৫','৪৬','৪৭','৪৮','৪৯','৫০'];
-var usageCntr = 0;
-var meaningCntr = 0;
-var subMeaningCntr = 0;
-var posCntr = 0;
-var phraseCntr = 0;
-var phrasalVerbCntr = 0;
-var compoundWordCntr = 0;
-var derivativeCntr = 0;
+// var usageCntr = 0;
+// var meaningCntr = 0;
+// var subMeaningCntr = 0;
+// var posCntr = 0;
+// var phraseCntr = 0;
+// var phrasalVerbCntr = 0;
+// var compoundWordCntr = 0;
+// var derivativeCntr = 0;
 
-var dict = {mainWord:'', altSpelling:'', usages:{}};
-var deletedUsageIndices = [];
+var dict = {mainWord:'', altSpelling:'', usageCntr: 0, usages:{}, deletedUsageIndices: []};
 
 $(document).ready(function() {
     console.log( 'ready!' );
-
-    // var elems = document.querySelectorAll('.check-box');
-    // var btn = document.querySelector('.btn-elem');
-    // [].forEach.call(elems, function(el) {
-    // el.addEventListener('change', function() {
-    //     var checked = document.querySelectorAll('.check-box:checked');
-    //     if (checked.length) {
-    //         // btn.style.backgroundColor = 'green';
-    //         $(this).closest('.btn-elem').style.backgroundColor = 'green';
-    //     } else {
-    //         // btn.style.backgroundColor = '';
-    //         $(this).closest('.btn-elem').style.backgroundColor = '';
-    //     }
-    // });
-    // });
 });
-
-// $('#selectPoS_1-1').on('shown.bs.select', function (e) {
-//     console.log($(this).attr('data-index'));
-// });
 
 function dataElemOnFocusOut(elem) {
     if (elem.classList.contains('dropdown-menu')) {
-        // console.log($(elem).closest('.bootstrap-select').find('select').first().attr('id'));
-        // console.log('BBB');
-        // return;
         elem = document.getElementById($(elem).closest('.bootstrap-select').find('select').first().attr('id'));
         var id = elem.id;
         var name = elem.name;
@@ -52,7 +29,7 @@ function dataElemOnFocusOut(elem) {
         var value = elem.value;
     }
 
-    console.log(id, name, value);
+    // console.log(id, name, value);
     // return;
 
     if (id == 'mainWord') {
@@ -61,11 +38,7 @@ function dataElemOnFocusOut(elem) {
         dict.altSpelling = value;
     } else {
         var dataIndex = elem.dataset.index;
-        // console.log(dataIndex);
-        // var subMeaningclasses = ['inpClsSubMeaning','inpClsExampleSubMeaning'];
-        // var meaningclasses = ['inpClsMeaning','inpClsExample'];
         if ($('#'+id).hasClass('inpClsSubMeaning') || $('#'+id).hasClass('inpClsExampleSubMeaning')) {
-            // console.log('A');
             var usageSectionCode = dataIndex.substring(0, 3);
             var diParts = dataIndex.substring(4).split('-');
             var usageIndex = parseInt(diParts[0]);
@@ -75,39 +48,34 @@ function dataElemOnFocusOut(elem) {
             dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].meaning[meaningIndex].subMeaning[subMeaningIndex][name] = value;
         } 
         else if ($('#'+id).hasClass('inpClsMeaning') || $('#'+id).hasClass('inpClsExample')) {
-            // console.log('B');
             var usageSectionCode = dataIndex.substring(0, 3);
             var diParts = dataIndex.substring(4).split('-');
             var usageIndex = parseInt(diParts[0]);
             var itemIndex = parseInt(diParts[1]);
             var meaningIndex = parseInt(diParts[2]);
-            // console.log(usageSectionCode, usageIndex, itemIndex, meaningIndex);
             dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].meaning[meaningIndex][name] = value;
         } 
         else {
-            // console.log('C');
             var usageSectionCode = elem.dataset.usageSectionCode;
             var diParts = dataIndex.split('-');
             var usageIndex = parseInt(diParts[0]);
             var itemIndex = parseInt(diParts[1]);
-            console.log(usageSectionCode, usageIndex, itemIndex);
+            dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].changed = 1;
+            if (['phr','phv','cpw','drv'].includes(usageSectionCode)) {
+                dict.usages[usageIndex].sections[usageSectionCode].changed = 1;
+            }
+            // console.log(usageSectionCode, usageIndex, itemIndex);
             if (!('pathPrefix' in elem.dataset)) {
                 dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex][name] = value;
             }
             else {
                 var pathPrefix = elem.dataset.pathPrefix;
-                console.log(pathPrefix);
                 var ppParts = pathPrefix.split('/');
-                console.log(ppParts, ppParts.length);
                 if (ppParts[0] == 'posDetails') {
                     if (ppParts.length == 1) {
                         dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].posDetails[name] = value;
                     }
                     else {
-                        // if (ppParts[1] == 'nounTypes') {
-                        //     dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].posDetails.nounTypes[name] = value;
-                        // } 
-                        // else 
                         if (ppParts[1] == 'verbForms') {
                             dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].posDetails.verbForms[name] = value;
                         }
@@ -129,8 +97,6 @@ function fnPosOnChange(selectId) {
     var usageIndex = parseInt(diParts[0]);
     var itemIndex = parseInt(diParts[1]);
     var usageSectionCode = 'pos';
-    // console.log(divPosDetailId);
-    // return;
 
     if (e.options[e.selectedIndex].value == 'noun') {
         if ($('#divVerb_'+elemIndex).length > 0) {
@@ -293,8 +259,7 @@ function toggleBtnGroupHandler(button) {
 
 //-~-~-~-~-~-~-~-~-~-~-~-~-~-~ USAGE -~-~-~-~-~-~-~-~-~-~-~-~-~-~
 function addUsage(button) {
-    usageCntr++;
-    var usageIndex = usageCntr;
+    var usageIndex = ++(dict.usageCntr);
     dict.usages[usageIndex] = {
         sections: {},
     };
@@ -303,9 +268,10 @@ function addUsage(button) {
     $divUsage.attr('id', 'divUsage_' + usageIndex);
     $divUsage.attr('data-index', usageIndex);
     $divUsage.find('label').html('Usage ' + usageIndex);
-    if (usageCntr == 1) {
+    if (usageIndex == 1) {
         $divUsage.find('#btnRemoveUsage_x').remove();
     } else {
+        $divUsage.find('#btnRemoveUsage_x').attr('data-index', usageIndex);
         $divUsage.find('#btnRemoveUsage_x').attr('id', 'btnRemoveUsage_' + usageIndex);
     }
     $divUsage.find('#btnAddPoS_x').attr('data-index', usageIndex);
@@ -341,7 +307,14 @@ function addUsage(button) {
 };
 
 function removeUsage(buttonId) {
-    $('#'+buttonId).closest('.divClsUsage').hide('fast', function(){ $(this).remove(); });
+    var usageIndex = $('#'+buttonId).data('index');
+    if (confirm('Are you sure you want to remove Usage '+usageIndex+'?')) {
+        // Update dict
+        dict.usages[usageIndex] = {};
+        dict.deletedUsageIndices.push(usageIndex);
+        // Remove from DOM
+        $('#'+buttonId).closest('.divClsUsage').hide('fast', function(){ $(this).remove(); });
+    }
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~ Part of Speech -~-~-~-~-~-~-~-~-~-~-~-~
@@ -362,7 +335,8 @@ function addPartOfSpeech(buttonId) {
         posDetails: {},
         meaningCntr: 0,
         meaning: {},
-        deletedMeaningIndices: []
+        deletedMeaningIndices: [],
+        changed: 0
     };
 
     var elemIndex = usageIndex + '-' + posCntr;
@@ -410,13 +384,23 @@ function removePartOfSpeech(button) {
     var usageIndex = parseInt(diParts[0]);
     var itemIndex = parseInt(diParts[1]);
 
-    // Update dict - 1)remove meaning, 2)update deleted indices
-    // Don't decrease meaningCntr, since that would create duplicate indices after new addition
-    dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
-    dict.usages[usageIndex].sections[usageSectionCode].deletedItemIndices.push(itemIndex);
+    var remove = 0;
+    if (dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].changed == 1) {
+        if (confirm('Are you sure you want to remove Part of Speech '+btnDataIndex+'?')) {
+            remove = 1;
+        }
+    } else {
+        remove = 1;
+    }
+    if (remove == 1) {
+        // Update dict - 1)remove meaning, 2)update deleted indices
+        // Don't decrease meaningCntr, since that would create duplicate indices after new addition
+        dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
+        dict.usages[usageIndex].sections[usageSectionCode].deletedItemIndices.push(itemIndex);
 
-    // Remove element from DOM
-    $('#divPartOfSpeech_'+btnDataIndex).hide('fast', function(){ this.remove(); });
+        // Remove element from DOM
+        $('#divPartOfSpeech_'+btnDataIndex).hide('fast', function(){ this.remove(); });
+    }
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~ Phrases -~-~-~-~-~-~-~-~-~-~-~-~
@@ -428,7 +412,8 @@ function addPhraseSection(usageIndex) {
         dict.usages[usageIndex].sections[usageSectionCode] = {
             itemCntr: 0,
             items: {},
-            deletedItemIndices: []
+            deletedItemIndices: [],
+            changed: 0
         };
     }
     var phraseCntr = ++(dict.usages[usageIndex].sections[usageSectionCode].itemCntr);
@@ -437,7 +422,8 @@ function addPhraseSection(usageIndex) {
         phrase: '',
         meaningCntr: 0,
         meaning: {},
-        deletedMeaningIndices: []
+        deletedMeaningIndices: [],
+        changed: 0
     };
 
     var $divPhrases = $('#divPhrases_x').clone();
@@ -475,12 +461,22 @@ function addPhraseSection(usageIndex) {
 };
 
 function removePhraseSection(usageIndex) {
-    // Update dict
     var usageSectionCode = 'phr';
-    dict.usages[usageIndex].sections[usageSectionCode] = {};
+    var remove = 0;
+    if (dict.usages[usageIndex].sections[usageSectionCode].changed == 1) {
+        if (confirm('Are you sure you want to remove this Phrase section?')) {
+            remove = 1;
+        }
+    } else {
+        remove = 1;
+    }
+    if (remove == 1) {
+        // Update dict
+        dict.usages[usageIndex].sections[usageSectionCode] = {};
+        // Remove element from DOM
+        $('#divPhrases_'+usageIndex).hide('fast', function(){ this.remove(); });
+    }
     
-    // Remove element from DOM
-    $('#divPhrases_'+usageIndex).hide('fast', function(){ this.remove(); });
 }
 
 function addMorePhrase(button) {
@@ -523,18 +519,26 @@ function removePhrase(buttonId) {
     var usageIndex = parseInt(diParts[0]);
     var itemIndex = parseInt(diParts[1]);
     
-    // Update dict
-    dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
-    dict.usages[usageIndex].sections[usageSectionCode].deletedItemIndices.push(itemIndex);
+    var remove = 0;
+    if (dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].changed == 1) {
+        if (confirm('Are you sure you want to remove Phrase '+itemIndex+'?')) {
+            remove = 1;
+        }
+    } else {
+        remove = 1;
+    }
+    if (remove == 1) {
+        // Update dict
+        dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
+        dict.usages[usageIndex].sections[usageSectionCode].deletedItemIndices.push(itemIndex);
 
-    // Remove element from DOM
-    $('#divIndPhrase_'+btnDataIndex).hide('fast', function(){ this.remove(); });
+        // Remove element from DOM
+        $('#divIndPhrase_'+btnDataIndex).hide('fast', function(){ this.remove(); });
+    }
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~ Phrasal Verbs -~-~-~-~-~-~-~-~-~-~-~-~
 function addPhrasalVerbSection(usageIndex) {
-    // dict.usages[usageIndex].phrasalVerbCntr++;
-    // var phrasalVerbCntr = dict.usages[usageIndex].phrasalVerbCntr;
     var usageSectionCode = 'phv';
 
     if (!(usageSectionCode in dict.usages[usageIndex].sections) || 
@@ -542,7 +546,8 @@ function addPhrasalVerbSection(usageIndex) {
         dict.usages[usageIndex].sections[usageSectionCode] = {
             itemCntr: 0,
             items: {},
-            deletedItemIndices: []
+            deletedItemIndices: [],
+            changed: 0
         };
     }
     var phrasalVerbCntr = ++(dict.usages[usageIndex].sections[usageSectionCode].itemCntr);
@@ -550,7 +555,8 @@ function addPhrasalVerbSection(usageIndex) {
         phrasalVerb: '',
         meaningCntr: 0,
         meaning: {},
-        deletedMeaningIndices: []
+        deletedMeaningIndices: [],
+        changed: 0
     };
     
     var $divPhrasalVerbs = $('#divPhrasalVerbs_x').clone();
@@ -588,12 +594,21 @@ function addPhrasalVerbSection(usageIndex) {
 };
 
 function removePhrasalVerbSection(usageIndex) {
-    // Update dict
     var usageSectionCode = 'phv';
-    dict.usages[usageIndex].sections[usageSectionCode] = {};
-    
-    // Remove element from DOM
-    $('#divPhrasalVerbs_'+usageIndex).hide('fast', function(){ this.remove(); });
+    var remove = 0;
+    if (dict.usages[usageIndex].sections[usageSectionCode].changed == 1) {
+        if (confirm('Are you sure you want to remove this Phrasal Verb section?')) {
+            remove = 1;
+        }
+    } else {
+        remove = 1;
+    }
+    if (remove == 1) {
+        // Update dict
+        dict.usages[usageIndex].sections[usageSectionCode] = {};
+        // Remove element from DOM
+        $('#divPhrasalVerbs_'+usageIndex).hide('fast', function(){ this.remove(); });
+    }
 }
 
 function addMorePhrasalVerb(button) {
@@ -636,12 +651,22 @@ function removePhrasalVerb(buttonId) {
     var usageIndex = parseInt(diParts[0]);
     var itemIndex = parseInt(diParts[1]);
     
-    // Update dict
-    dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
-    dict.usages[usageIndex].sections[usageSectionCode].deletedItemIndices.push(itemIndex);
+    var remove = 0;
+    if (dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].changed == 1) {
+        if (confirm('Are you sure you want to remove Phrasal Verb '+itemIndex+'?')) {
+            remove = 1;
+        }
+    } else {
+        remove = 1;
+    }
+    if (remove == 1) {
+        // Update dict
+        dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
+        dict.usages[usageIndex].sections[usageSectionCode].deletedItemIndices.push(itemIndex);
 
-    // Remove element from DOM
-    $('#divIndPhrasalVerb_'+btnDataIndex).hide('fast', function(){ this.remove(); });
+        // Remove element from DOM
+        $('#divIndPhrasalVerb_'+btnDataIndex).hide('fast', function(){ this.remove(); });
+    }
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~ Compound Words -~-~-~-~-~-~-~-~-~-~-~-~
@@ -653,7 +678,8 @@ function addCompoundWordSection(usageIndex) {
         dict.usages[usageIndex].sections[usageSectionCode] = {
             itemCntr: 0,
             items: {},
-            deletedItemIndices: []
+            deletedItemIndices: [],
+            changed: 0
         };
     }
     var compoundWordCntr = ++(dict.usages[usageIndex].sections[usageSectionCode].itemCntr);
@@ -661,7 +687,8 @@ function addCompoundWordSection(usageIndex) {
         compoundWord: '',
         meaningCntr: 0,
         meaning: {},
-        deletedMeaningIndices: []
+        deletedMeaningIndices: [],
+        changed: 0
     };
 
     var $divCompoundWords = $('#divCompoundWords_x').clone();
@@ -699,27 +726,25 @@ function addCompoundWordSection(usageIndex) {
 };
 
 function removeCompoundWordSection(usageIndex) {
-    // Update dict
     var usageSectionCode = 'cpw';
-    dict.usages[usageIndex].sections[usageSectionCode] = {};
-    
-    // Remove element from DOM
-    $('#divCompoundWords_'+usageIndex).hide('fast', function(){ this.remove(); });
+    var remove = 0;
+    if (dict.usages[usageIndex].sections[usageSectionCode].changed == 1) {
+        if (confirm('Are you sure you want to remove this Compound Word section?')) {
+            remove = 1;
+        }
+    } else {
+        remove = 1;
+    }
+    if (remove == 1) {
+        // Update dict
+        dict.usages[usageIndex].sections[usageSectionCode] = {};
+        // Remove element from DOM
+        $('#divCompoundWords_'+usageIndex).hide('fast', function(){ this.remove(); });
+    }
 }
 
 function addMoreCompoundWord(button) {
     var usageIndex = $('#'+button.closest('.divClsCompoundWords').id).attr('data-index');
-    // console.log(usageIndex);
-    // dict.usages[usageIndex].compoundWordCntr++;
-    // var compoundWordCntr = dict.usages[usageIndex].compoundWordCntr;
-    
-    // var elemIndex = usageIndex + '-' + compoundWordCntr;
-    // var $divIndCompoundWord = $('#divIndCompoundWord').clone();
-    // $divIndCompoundWord.find('label').html('<font color="#feae3a">' + compoundWordCntr + '. &nbsp; Compound Word</font>');
-    // var inpCompoundWord = $divIndCompoundWord.find('#inpCompoundWord').first();
-    // inpCompoundWord.attr('id', 'inpCompoundWord_' + elemIndex);
-    // inpCompoundWord.attr('data-index', elemIndex);
-
     var usageSectionCode = 'cpw';
     var usageIndex = $('#'+button.id).data('index');
 
@@ -753,21 +778,28 @@ function addMoreCompoundWord(button) {
 };
 
 function removeCompoundWord(buttonId) {
-    // var divId = document.getElementById(buttonId).closest('.divClsIndCompoundWord').id;
-    // $('#'+divId).hide('fast', function(){ $('#'+divId).remove(); });
-    // compoundWordCntr--;
     var btnDataIndex = $('#'+buttonId).data('index');
     var usageSectionCode = 'cpw';
     var diParts = btnDataIndex.split('-');
     var usageIndex = parseInt(diParts[0]);
     var itemIndex = parseInt(diParts[1]);
     
-    // Update dict
-    dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
-    dict.usages[usageIndex].sections[usageSectionCode].deletedItemIndices.push(itemIndex);
+    var remove = 0;
+    if (dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].changed == 1) {
+        if (confirm('Are you sure you want to remove Compound Word '+itemIndex+'?')) {
+            remove = 1;
+        }
+    } else {
+        remove = 1;
+    }
+    if (remove == 1) {
+        // Update dict
+        dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
+        dict.usages[usageIndex].sections[usageSectionCode].deletedItemIndices.push(itemIndex);
 
-    // Remove element from DOM
-    $('#divIndCompoundWord_'+btnDataIndex).hide('fast', function(){ this.remove(); });
+        // Remove element from DOM
+        $('#divIndCompoundWord_'+btnDataIndex).hide('fast', function(){ this.remove(); });
+    }
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~ Derivatives -~-~-~-~-~-~-~-~-~-~-~-~
@@ -779,7 +811,8 @@ function addDerivativeSection(usageIndex) {
         dict.usages[usageIndex].sections[usageSectionCode] = {
             itemCntr: 0,
             items: {},
-            deletedItemIndices: []
+            deletedItemIndices: [],
+            changed: 0
         };
     }
     var derivativeCntr = ++(dict.usages[usageIndex].sections[usageSectionCode].itemCntr);
@@ -787,7 +820,8 @@ function addDerivativeSection(usageIndex) {
         derivate: '',
         meaningCntr: 0,
         meaning: {},
-        deletedMeaningIndices: []
+        deletedMeaningIndices: [],
+        changed: 0
     };
 
     var $divDerivatives = $('#divDerivatives_x').clone();
@@ -825,22 +859,26 @@ function addDerivativeSection(usageIndex) {
 };
 
 function removeDerivativeSection(usageIndex) {
-    // Update dict
     var usageSectionCode = 'drv';
-    dict.usages[usageIndex].sections[usageSectionCode] = {};
-    
-    // Remove element from DOM
-    $('#divDerivatives_'+usageIndex).hide('fast', function(){ this.remove(); });
+    var remove = 0;
+    if (dict.usages[usageIndex].sections[usageSectionCode].changed == 1) {
+        if (confirm('Are you sure you want to remove this Derivative section?')) {
+            remove = 1;
+        }
+    } else {
+        remove = 1;
+    }
+    if (remove == 1) {
+        // Update dict
+        dict.usages[usageIndex].sections[usageSectionCode] = {};
+        // Remove element from DOM
+        $('#divDerivatives_'+usageIndex).hide('fast', function(){ this.remove(); });
+    }
 }
 
 function addMoreDerivative(button) {
     var usageSectionCode = 'drv';
     var usageIndex = $('#'+button.id).data('index');
-    // var usageIndex = $('#'+button.closest('.divClsDerivatives').id).attr('data-index');
-    // console.log(usageIndex);
-    // dict.usages[usageIndex].derivativeCntr++;
-    // var derivativeCntr = dict.usages[usageIndex].derivativeCntr;
-    // var elemIndex = usageIndex + '-' + derivativeCntr;
 
     var derivativeCntr = ++(dict.usages[usageIndex].sections[usageSectionCode].itemCntr);
     dict.usages[usageIndex].sections[usageSectionCode].items[derivativeCntr] = {
@@ -864,12 +902,6 @@ function addMoreDerivative(button) {
     $divIndDerivative.find('.btnClsAddMeaning').first().attr('data-index', usageSectionCode+'_'+elemIndex);
     $divIndDerivative.find('.btnClsAddMeaning').first().attr('id', 'btnAddMeaning_' + usageSectionCode+'_'+elemIndex);
     
-    // var $divIndDerivative = $('#divIndDerivative').clone();
-    // $divIndDerivative.find('label').html('<font color="#a638fc">' + derivativeCntr + '. &nbsp; Darivative</font>');
-    // var inpDerivative = $divIndDerivative.find('#inpDerivative').first();
-    // inpDerivative.attr('id', 'inpDerivative_' + elemIndex);
-    // inpDerivative.attr('data-index', elemIndex);
-    
     $divIndDerivative
         .hide()
         .removeClass('hide')
@@ -884,12 +916,22 @@ function removeDerivative(buttonId) {
     var usageIndex = parseInt(diParts[0]);
     var itemIndex = parseInt(diParts[1]);
     
-    // Update dict
-    dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
-    dict.usages[usageIndex].sections[usageSectionCode].deletedItemIndices.push(itemIndex);
+    var remove = 0;
+    if (dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].changed == 1) {
+        if (confirm('Are you sure you want to remove Derivative '+itemIndex+'?')) {
+            remove = 1;
+        }
+    } else {
+        remove = 1;
+    }
+    if (remove == 1) {
+        // Update dict
+        dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex] = {};
+        dict.usages[usageIndex].sections[usageSectionCode].deletedItemIndices.push(itemIndex);
 
-    // Remove element from DOM
-    $('#divIndDerivative_'+btnDataIndex).hide('fast', function(){ this.remove(); });
+        // Remove element from DOM
+        $('#divIndDerivative_'+btnDataIndex).hide('fast', function(){ this.remove(); });
+    }
 }
 
 //-~-~-~-~-~-~-~-~-~-~-~-~ Meaning -~-~-~-~-~-~-~-~-~-~-~-~
