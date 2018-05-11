@@ -46,54 +46,6 @@ block content
                     |   Save
                   
             div#divUsagePlaceholder
-            //- div.divClsUsage#divUsage_1(data-index='1')
-            //-   hr
-            //-   label Usage 1
-            //-   div.col-md-2(style='float:right;margin: 0px 18px 15px 0px')
-            //-     button.btn.btn-default#btnAddPoS_1(data-index='1', type='button', style='color:#C70039', onclick='addPartOfSpeech(this)')
-            //-       i.fa.fa-plus
-            //-       | &nbsp; Part of Speech
-              
-            //-   div#divPartOfSpeechPlaceholder_1(data-index='1')
-
-
-            //-   div#divPhrasesPlaceholder_1(data-index='1')
-
-
-            //-   div#divPhrasalVerbsPlaceholder_1(data-index='1')
-
-
-            //-   div#divCompoundWordsPlaceholder_1(data-index='1')
-
-
-            //-   div#divDerivativesPlaceholder_1(data-index='1')
-              
-              
-            //-   div#divHrDashed
-            //-     hr.dashed
-              
-            //-   div.divClsUsageCtrlButtons#divUsageCtrlButtons_1(data-index='1')
-            //-     div.col-md-2(style='float:left;padding:0px 0px 0px 30px')
-            //-       button.btn.btn-default#btnAddPoS_1(data-index='1', type='button', style='color:#C70039', onclick='addPartOfSpeech(this)')
-            //-         i.fa.fa-plus
-            //-         | &nbsp; Part of Speech
-            //-     div.btn-group.col-md-7#divBtnGroupUsage_1(data-index='1', data-toggle="buttons", style='float:right;padding:0px 0px 0px 60px')
-            //-       button.btn.btn-default.btnClsCheckbox
-            //-         input.chkClsButtonGrp#chkPhrases_1(data-index='1', type="checkbox" name="phrases")
-            //-         i.fa.fa-plus
-            //-           | &nbsp; Phrases
-            //-       button.btn.btn-default.btnClsCheckbox
-            //-         input.chkClsButtonGrp#chkPhrasalVerbs_1(data-index='1', type="checkbox" name="phrasalVerbs")
-            //-         i.fa.fa-plus
-            //-           | &nbsp; Phrasal Verbs
-            //-       button.btn.btn-default.btnClsCheckbox
-            //-         input.chkClsButtonGrp#chkCompoundWords_1(data-index='1', type="checkbox" name="compoundWords")
-            //-         i.fa.fa-plus
-            //-           | &nbsp; Compound Words
-            //-       button.btn.btn-default.btnClsCheckbox
-            //-         input.chkClsButtonGrp#chkDerivatives_1(data-index='1', type="checkbox" name="derivatives")
-            //-         i.fa.fa-plus
-            //-           | &nbsp; Derivatives
 
             div#divFooter(style='margin-top:60px;overflow:auto;')
               div.col-12
@@ -286,7 +238,7 @@ block content
   //-+-+-+-+-+ Template for Sub-meaning -+-+-+-+-+
   //- data-index format: <aaa_x-x-x-x>
   //-   'aaa' = pos/phr/phv/cmw/drv, 
-  //-   'x-x-x' = 1-1-1/1-1-2/1-2-1/so on. (1st 'x' = Usage ID, 2nd 'x' = pos/phr/phv/cmw/drv ID, 3rd 'x' = meaning ID, 4th 'x' = sub-meaning ID)
+  //-   'x-x-x-x' = 1-1-1-1/1-1-1-2/1-1-2-1/so on. (1st 'x' = Usage ID, 2nd 'x' = pos/phr/phv/cmw/drv ID, 3rd 'x' = meaning ID, 4th 'x' = sub-meaning ID)
   div.hide.divClsSubMeaning.form-inline#divSubMeaning_aaa_x-x-x-x(data-index='aaa_x-x-x-x')
     .x
       div
