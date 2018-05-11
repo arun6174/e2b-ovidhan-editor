@@ -31,16 +31,19 @@ block content
                   label(for='altspelling') Alternate Spelling(s)
                   br
                   input#altSpelling.form-control(type="text", name="altSpelling", onfocusout='dataElemOnFocusOut(this)')
-                div.col-sm-5(style='float:right;padding:0em 0em 0em 3.6em;')
-                  button.btn.btn-primary.btn-lg.btn-purple.btnClsAddUsage(type="button", style='border-radius:2px;vertical-align:top;')
+                div.col-sm-5#divHeaderBtns(style='float:right;padding:0em 0em 0em 1.8em;')
+                  button.btn.btn-lg.btn-purple.btnClsAddUsage(type="button", style='border-radius:2px;vertical-align:top;')
                     i.fa.fa-plus
                     | &nbsp; Usage
                   //- div.col-xs-2.form-inline(style='border-left:2px solid #00f;height:40px;width:20px;padding:0px')
                   label &emsp;
                   hr.vert
                   label &ensp;
-                  button.btn.btn-primary.btn-lg.btn-primary.btnClsAddNew(type='button', style='border-radius:2px;margin-left:6px;vertical-align:top;') Add New
-                  button.btn.btn-primary.btn-lg.btn-success(type='submit', style='border-radius:2px;margin-left:6px;vertical-align:top;') Save
+                  button.btn.btn-lg.btn-primary.btnClsAddNew(type='button', style='border-radius:2px;margin-left:6px;vertical-align:top;') Add New
+                  button.btn.btn-lg.btn-success.has-spinner.btnClsSave(type='submit', style='border-radius:2px;margin-left:6px;vertical-align:top;width:100px;')
+                    span.spinner
+                      i.fa.fa-spin.fa-refresh
+                    |   Save
                   
             div#divUsagePlaceholder
             //- div.divClsUsage#divUsage_1(data-index='1')
@@ -94,13 +97,16 @@ block content
 
             div#divFooter(style='margin-top:60px;overflow:auto;')
               div.col-12
-                button.btn.btn-primary.btn-lg.btn-purple.btnClsAddUsage(type="button", style='border-radius:2px;float:left;margin:10px 0px 10px 0px;')
+                button.btn.btn-lg.btn-purple.btnClsAddUsage(type="button", style='border-radius:2px;float:left;margin:10px 0px 10px 0px;')
                   i.fa.fa-plus
                   | &nbsp; Usage
               hr.last
               div.col-12
                 button.btn.btn-primary.btn-lg.btn-primary.btnClsAddNew(type='button', style='border-radius:2px;float:left;') Add New
-                button.btn.btn-primary.btn-lg.btn-success(type='submit', style='border-radius:2px;margin-left:6px;float:right;') Save
+                button.btn.btn-lg.btn-success.has-spinner.btnClsSave(type='submit', style='border-radius:2px;margin-left:6px;float:right;width:100px;')
+                  span.spinner
+                    i.fa.fa-spin.fa-refresh
+                  |   Save
 
         #search-edit.tab-pane(role='tabpanel')
           div.col-12(style='text-align:center;')

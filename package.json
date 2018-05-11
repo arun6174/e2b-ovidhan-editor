@@ -1,6 +1,7 @@
 {
-  "name": "e2b-ovidhan",
-  "version": "0.0.0",
+  "name": "e2b-ovidhan-editor",
+  "version": "1.0.0",
+  "author": "Arunashis Ghose <hindol96@gmail.com>",
   "private": true,
   "scripts": {
     "start": "node ./bin/www"

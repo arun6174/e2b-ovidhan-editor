@@ -33,3 +33,7 @@
 .has-spinner.btn-large.active .spinner {
   width: 19px;
 }
+
+.has-spinner.btn-lg.active .spinner {
+  width: 21px;
+}
