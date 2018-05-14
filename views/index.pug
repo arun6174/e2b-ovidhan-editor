@@ -223,7 +223,7 @@ block content
         button.btn.btn-default.btnClsRemoveMeaning#btnRemoveMeaning_aaa_x-x-x(type='button', style='padding:4px 8px 4px 8px', onclick='removeMeaning(this)')
           i.fa.fa-close
           //- | &ensp; অর্থ
-        label(style='margin-left:0.6em;') অর্থ (N)
+        label.lblClsMeaning(style='margin-left:0.6em;') অর্থ (N)
       div
         input.form-control.inpClsMeaning#inpMeaning_aaa_x-x-x(data-index='aaa_x-x-x', type='text', name='meaning', style='width: 35em; margin:0em 0em 0em 1.2em', onfocusout='dataElemOnFocusOut(this)')
     .x
@@ -242,7 +242,7 @@ block content
   div.hide.divClsSubMeaning.form-inline#divSubMeaning_aaa_x-x-x-x(data-index='aaa_x-x-x-x')
     .x
       div
-        label(style='padding-left:4em; margin-top:10px') অর্থান্তর (N-a)
+        label.lblClsSubMeaning(style='padding-left:4em; margin-top:10px') অর্থান্তর (N-a)
       div
         input.input1.form-control.inpClsSubMeaning#inpSubMeaning_aaa_x-x-x-x(data-index='aaa_x-x-x-x', type='text', name='subMeaning', style='width:35em; margin:0em 0em 0em 1.2em', onfocusout='dataElemOnFocusOut(this)')
     .x
@@ -254,7 +254,7 @@ block content
           i.fa.fa-minus
           | &ensp; অর্থান্তর
 
-  //---------- Template for Phrases ----------
+  //---------- Template for Phrase section ----------
   div.hide.divClsPhrases#divPhrases_x(data-index='x')
     hr.dashed
     p
@@ -267,7 +267,7 @@ block content
         i.fa.fa-plus
         | &nbsp; Phrase
 
-  //----- Template for (individual) Phrase -----
+  //-------- Template for individual Phrase --------
   div.hide.form-inline.divClsIndPhrase#divIndPhrase_x-x(data-index='x-x',style='margin:15px 0px 0px 25px')
     .x
       div
@@ -283,7 +283,7 @@ block content
         i.fa.fa-plus
         | &nbsp; অর্থ
 
-  //-~~~~~~~~~~ Template for Phrasal verbs ~~~~~~~~~~
+  //-~~~~~~~~~~ Template for Phrasal verb section ~~~~~~~~~~
   div.hide.divClsPhrasalVerbs#divPhrasalVerbs_x(data-index='x')
     hr.dashed
     p
@@ -296,7 +296,7 @@ block content
         i.fa.fa-plus
         | &nbsp; Phrasal Verb
 
-  //-~~~~~ Template for (individual) Phrasal verb ~~~~~
+  //-~~~~~~~~~ Template for individual Phrasal verb ~~~~~~~~~
   div.hide.form-inline.divClsIndPhrasalVerb#divIndPhrasalVerb_x-x(data-index='x-x',style='margin:15px 0px 0px 25px')
     .x
       div
@@ -312,7 +312,7 @@ block content
         i.fa.fa-plus
         | &nbsp; অর্থ
 
-  //-++++++++++ Template for Compound words ++++++++++
+  //-++++++++++ Template for Compound word section ++++++++++
   div.hide.divClsCompoundWords#divCompoundWords_x(data-index='x')
     hr.dashed
     p
@@ -325,7 +325,7 @@ block content
         i.fa.fa-plus
         | &nbsp; Compound Word
 
-  //-+++++ Template for (individual) Compound word +++++
+  //-+++++++++ Template for individual Compound word +++++++++
   div.hide.form-inline.divClsIndCompoundWord#divIndCompoundWord_x-x(data-index='x-x',style='margin:15px 0px 0px 25px')
     .x
       div
@@ -341,7 +341,7 @@ block content
         i.fa.fa-plus
         | &nbsp; অর্থ
 
-  //-========== Template for Derivatives ==========
+  //-========== Template for Derivative section ==========
   div.hide.divClsDerivatives#divDerivatives_x(data-index='x')
     hr.dashed
     p
@@ -354,7 +354,7 @@ block content
         i.fa.fa-plus
         | &nbsp; Derivative
 
-  //-===== Template for (individual) Derivative =====
+  //-======== Template for individual Derivative ========
   div.hide.form-inline.divClsIndDerivative#divIndDerivative_x-x(data-index='x-x',style='margin:15px 0px 0px 25px')
     .x
       div
