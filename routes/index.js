@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var helper = require('../helpers/helper.js');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -8,13 +9,26 @@ router.get('/', function(req, res, next) {
 
 /* POST add new word. */
 router.post('/addnew', function(req, res) {
-    console.log(JSON.stringify(req.body));
-    res.json({
-        success: true,
-        data: {
-            message: 'Entry saved'
-        }
-    });
+    // console.log(JSON.stringify(req.body));
+    // console.log('==========')
+    try {
+        dict = helper.processInputDict(req.body);
+        console.log(JSON.stringify(dict));
+        res.json({
+            success: true,
+            data: {
+                message: 'Entry saved'
+            }
+        });
+    } catch(err) {
+        console.log('Error occurred: ' + err.stack);
+        res.json({
+            success: false,
+            data: {
+                message: 'Failed to save entry!'
+            }
+        });
+    }
 });
 
 module.exports = router;

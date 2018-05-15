@@ -113,7 +113,7 @@ function dataElemOnFocusOut(elem) {
             var itemIndex = parseInt(diParts[1]);
             var meaningIndex = parseInt(diParts[2]);
             var subMeaningIndex = parseInt(diParts[3]);
-            dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].meanings[meaningIndex].subMeaning[subMeaningIndex][name] = value;
+            dict.usages[usageIndex].sections[usageSectionCode].items[itemIndex].meanings[meaningIndex].subMeanings[subMeaningIndex][name] = value;
         }
         else if ($('#' + id).hasClass('inpClsMeaning') || $('#' + id).hasClass('inpClsExample')) {
             var usageSectionCode = dataIndex.substring(0, 3);
@@ -439,7 +439,7 @@ function addPartOfSpeech(buttonId) {
     $divPartOfSpeech.find('.btnClsAddMeaning').first().attr('id', 'btnAddMeaning_' + usageSectionCode + '_' + elemIndex);
 
     // Each section must have at least one item, so disable the cross button
-    $divPartOfSpeech.find('.btnClsRemovePartOfSpeech').first().attr('disabled', true);
+    if (posCntr == 1) $divPartOfSpeech.find('.btnClsRemovePartOfSpeech').first().attr('disabled', true);
 
     var newSP = $('#selectPoS_x-x').clone();
     newSP.attr('data-index', elemIndex);
