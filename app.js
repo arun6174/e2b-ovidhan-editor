@@ -4,6 +4,7 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var AWS = require("aws-sdk");
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -31,7 +32,25 @@ app.use(function (req, res, next) {
     next(err);
 });
 
-/// error handlers
+// DB Configuration
+if (app.get('env') === 'development') {
+    AWS.config.update({
+        region: "ap-southeast-1",
+        endpoint: "http://localhost:8000"
+    });
+    global.dynamodb = new AWS.DynamoDB();
+}
+
+if (app.get('env') === 'production') {
+    AWS.config.update({
+        region: "ap-southeast-1",
+        endpoint: "<production endpoint>"
+    });
+    global.dynamodb = new AWS.DynamoDB();
+}
+
+
+// error handlers
 
 // development error handler
 // will print stacktrace
